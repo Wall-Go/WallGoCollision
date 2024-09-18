@@ -1,22 +1,19 @@
-#ifndef HDF5_INTERFACE_H_
-#define HDF5_INTERFACE_H_
+#pragma once
 
 #include <string>
 #include <vector>
 #include <H5Cpp.h> // C++ API for HDF5 files
 
-#include "Common.h"
+#include "EnvironmentMacros.h"
+#include "Utils.h"
 
 namespace wallgo
 {
 
-// Struct for holding metadata about collision tensor. Default values are set to prevent exceptions in HDF5 routines
-struct H5Metadata {
-	int basisSize = 1;
-	std::string basisName = "Unknown";
-	std::string integrator = "Unknown";
-};
+struct CollisionMetadata;
 
+namespace utils
+{
 
 /* Write C-style array (contiguous memory) to HDF5 file.
 arrayDimension = is the array 3D or 4D or etc. dims = data array dimensions. */
@@ -26,8 +23,8 @@ void writeDataSet(H5::H5File &h5File, const double* data, size_t arrayDimension,
 void writeDataSet(H5::H5File &h5File, const Array4D &data, std::string datasetName);
 
 // Write metadata struct to open H5 file. This is done using HDF5 attributes
-void writeMetadata(H5::H5File &h5File, const H5Metadata &metadata);
+void writeMetadata(H5::H5File &h5File, const CollisionMetadata& metadata);
 
-} // namespace
 
-#endif // header guard
+} // namespace utils
+} // namespace wallgo
