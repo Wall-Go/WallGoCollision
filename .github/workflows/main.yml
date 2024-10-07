@@ -18,7 +18,9 @@ jobs:
         os: [ubuntu-latest]
         build_type: [Release]
         c_compiler: [gcc, clang]
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.11"]
+        # Permutations commented until we release
+        #python-version: ["3.10", "3.11", "3.12"]
         include:
           - os: ubuntu-latest
             c_compiler: gcc
@@ -64,6 +66,7 @@ jobs:
                echo "$RUNNER_OS not supported"
                exit 1
              fi
+             pip install "pybind11[global]"
 
       - name: Clone muparser repository
         uses: actions/checkout@v4
