@@ -1,0 +1,67 @@
+# WallGo specifics
+temp/*
+bin/*
+examples/bin/
+python/package_standalone/WallGoCollision/*
+
+# Data files
+*.hdf5
+
+# Prerequisites
+*.d
+
+# Build artifacts
+build/*
+*.o
+*.obj
+*.lo
+*.slo
+
+# Precompiled headers
+*.gch
+*.pch
+
+# Compiled dynamic libs
+*.so
+*.dll
+*.dylib
+
+# Compiled static libs
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# VS
+.vs/*
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Python
+.Python
+__pycache__/
+*.py[cod]
+*$py.class
+develop-eggs/
+dist/
+wheels/
+*.egg
+*.egg-info/
+docs/_build
+*.pyd
+*.pyi
+
+# Weird mac things
+*.DS_Store
+*/.DS_Store
