@@ -3,6 +3,7 @@ temp/*
 bin/*
 examples/bin/
 python/package_standalone/WallGoCollision/*
+*_generated.h
 
 # Data files
 *.hdf5
