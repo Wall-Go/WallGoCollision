@@ -98,8 +98,8 @@ jobs:
       - name: Run Collision QCD examples
         run: cd ${{ github.workspace }}/examples && ./bin/QCD && cd ${{ github.workspace }}
 
-      - name: Build and install WallGoCollision with pip
-        run: pip install . -v
+      - name: Build and install WallGoCollision with pip, including tests
+        run: pip install -v .[tests]
 
       - name: Test with pytest
         run: cd ${{ github.workspace }} && pytest -vs
