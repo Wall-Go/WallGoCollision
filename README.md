@@ -77,3 +77,20 @@ pip install "pybind11[global]"
 This installation needs to be global, otherwise pip doesn't install the required CMake files. Alternatively, you could install pybind11 through ```conda``` or build it directly from source.
 
 For Linux systems, ```muparser``` needs to be manually installed from source. Please follow the installation instructions at https://github.com/beltoforion/muparser.
+
+## License
+
+Copyright (c) 2024 Andreas Ekstedt, Oliver Gould, Joonas Hirvonen,
+Benoit Laurent, Lauri Niemi, Philipp Schicho, and Jorinde van de Vis.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
