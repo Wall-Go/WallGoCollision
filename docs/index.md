@@ -16,4 +16,8 @@ appearing in the collision operator of the relativistic Boltzmann equation for p
 The user must provide relevant particle content for their model, matrix elements $M_{ab \rightarrow cd}$ of their choice in a symbolic form, and numerical values for model parameters appearing in the matrix elements. To get started, see [the quickstart page](./quickstart.md), [code examples in C++](../examples) or [code examples using the Python interface on **WallGo** repo](https://github.com/Wall-Go/WallGo/tree/main/Models).
 
 
-## Limitations
+## Current limitations
+
+- Only 2 <-> 2 collision processes are supported.
+
+- All physics parameters that appear in the matrix elements must be constant, floating point valued numbers. Dimensionful parameters must be given in units of the temperature (ie. **WallGoCollision** works in units of $T=1$). The limitation here is that parameters that vary along the momentum/position grid are not supported. 
