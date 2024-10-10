@@ -5,11 +5,11 @@ Collision integrations in **WallGoCollision** are performed using the Vegas Mont
 [WIP: the defaults and other details here are subject to change, and may be moved to dedicated API documentation]
 
 The `IntegrationOptions` class collects parameters that can be adjusted for granular control over the integrator:
--`maxIntegrationMomentum` specifies the upper bound on the radial integration variable. Must be given in units of the temperature. A value of order 10 is often sufficient because of Boltzmann suppression at high momenta. Default is 20.
+- `maxIntegrationMomentum` specifies the upper bound on the radial integration variable. Must be given in units of the temperature. A value of order 10 is often sufficient because of Boltzmann suppression at high momenta. Default is 20.
 
--`calls` sets the number of function evaluations between convergence checks. After `calls` evaluations, we check the statistical error and finish if it is within the specified `relativeErrorGoal` or `absoluteErrorGoal`. If not, we repeat the process with another `calls` evaluations. We also implement a check based on chi-squared of the Vegas algorithm, requiring that $\chi^2$ per degrees of freedom is comparable to 1 (threshold: $|\chi^2 / d - 1| \leq 0.5$). If the $\chi^2$ check fails, the current error estimate is deemed unreliable and we perform another `calls` function evaluations. Default is 50000.
+- `calls` sets the number of function evaluations between convergence checks. After `calls` evaluations, we check the statistical error and finish if it is within the specified `relativeErrorGoal` or `absoluteErrorGoal`. If not, we repeat the process with another `calls` evaluations. We also implement a check based on chi-squared of the Vegas algorithm, requiring that $\chi^2$ per degrees of freedom is comparable to 1 (threshold: $|\chi^2 / d - 1| \leq 0.5$). If the $\chi^2$ check fails, the current error estimate is deemed unreliable and we perform another `calls` function evaluations. Default is 50000.
 
--`maxTries` sets the maximum number of time the process described above is repeated before giving up. Therefore there will be a maximum of `calls * maxTries` function evaluations. Default is 50.
+- `maxTries` sets the maximum number of time the process described above is repeated before giving up. Therefore there will be a maximum of `calls * maxTries` function evaluations. Default is 50.
 
 - `relativeErrorGoal` and `absoluteErrorGoal` set error tolerances used in the convergence check.
 
