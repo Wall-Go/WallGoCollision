@@ -44,7 +44,7 @@ lightQuark.type = WallGoCollision.EParticleType.eFermion
 lightQuark.bInEquilibrium = True
 modelDef.defineParticleSpecies(lightQuark)
 ```
-The above particle species are all defined as "ultrarelativistic" (the default behavior). In **WallGoCollision**, an ultrarelativistic particle species $a$ means that its energy-momentum dispersion relation is approximated as $E_a \approx |p_a|$ in collision integrals. This allows for heavy optimizations and should be preferred whenever the approximation makes sense for your particles. For relaxing this approximation, see [here (TODO! empty link for now)]().
+The above particle species are all defined as "ultrarelativistic" (the default behavior). In **WallGoCollision**, an ultrarelativistic particle species $a$ means that its energy-momentum dispersion relation is approximated as $E_a \approx |p_a|$ in collision integrals. This allows for heavy optimizations and should be preferred whenever the approximation makes sense for your particles. For going beyond the ultrarelativistic approximation, see [here (TODO! empty link for now)]().
 
 Finally, we should define numerical values for masses that appear in propagators of matrix elements. In **WallGoCollision**, these masses are treated as model parameters analogous to the "gs" parameter defined above, ie. a propagator mass is just another user-defined symbol that can appear in matrix elements and must be given a numberical value. In the matrix elements for this example, the mass-square of a quark propagator is denoted by "mq2" and the mass-square of a gluon propagator is "mg2". For this model we approximate them as their asymptotic QCD thermal masses (same for all quark species):
 ```
@@ -79,7 +79,7 @@ This parses the file and finds matrix elements for particles that the model is a
 
 The `CollisionTensor` class contains collision integrals in an unevaluated but otherwise ready form. Once matrix elements have been loaded we can create a `CollisionTensor` object as follows:
 ```
-# modify according to your needs. Using a trivially small grid to make this example run fast
+# Modify according to your needs. Using a trivially small grid to make this example run fast
 gridSize = 5
 # Type hinting included for completeness
 collisionTensor: WallGoCollision.CollisionTensor = collisionModel.createCollisionTensor(gridSize)
