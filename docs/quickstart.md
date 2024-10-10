@@ -18,7 +18,7 @@ modelDef = WallGoCollision.ModelDefinition()
 gs = 1.228 # Corresponds to the QCD coupling
 modelDef.defineParameter("gs", gs) 
 ```
-Parameters must be given as (name, value) pairs. In the above, "gs" is the parameter name, and any appearance of "gs" in the symbolic matrix elements will be replaced with the numeric value during collision integration.
+Parameters must be given as (name, value) pairs. The value must be floating-point type or convertible to such, eg. complex numbers are not allowed. In the above, "gs" is the parameter name, and any appearance of "gs" in the symbolic matrix elements will be replaced with the numeric value during collision integration.
 
 Next we define our particle content using the ParticleDefinition class. Each particle species must have a unique name (string) as well as a unique integer identifier ("particle index"). The index is used to associate loaded matrix elements with the correct particles. Additionally, you must specify the particle statistics type (boson or fermion), and whether the species is assumed to remain in thermal equilibrium. The latter can be used to reduce the number of collision integrations for models containing particle species for which deviations from equilibrium are negligible. Here we define a "top quark" and a "gluon" as out-of-equilibrium particles, and a generic "light quark" that is kept in equilibrium.
 ```
@@ -51,4 +51,14 @@ Finally, we should define numerical values for masses that appear in propagators
 modelDef.defineParameter("mq2", gs**2 / 3.0)
 modelDef.defineParameter("mg2", gs**2)
 ```
+> [!NOTE]
+> Any dimensionful parameters must be given in units of the temperature. Therefore the above corresponds to eg. $\frac13 g_s^2 T^2$ for the quark mass-square.
+
+To finalize our model definition we create a concrete `PhysicsModel` based on the information in our `modelDef` object:
+```
+collisionModel = WallGoCollision.PhysicsModel(modelDef)
+```
+Once created, the particle and parameter content of a `PhysicsModel` is fixed and cannot be changed. You are still allowed to update values of existing parameters by calling `model.updateParameter(name, newValue)`. Runtime changes to a PhysicsModel will automatically propagate to `CollisionTensor` objects created from it.
+
+## Loading matrix elements
 
