@@ -15,7 +15,8 @@ The following assumes you have the **WallGoCollision** Python module [installed]
 Model definition is done by filling in a ModelDefinition helper object and passing it to the PhysicsModel constructor. Start by defining your model parameters:
 ```
 modelDef = WallGoCollision.ModelDefinition()
-modelDef.defineParameter("gs", 1.228) # Corresponds to the QCD coupling
+gs = 1.228 # Corresponds to the QCD coupling
+modelDef.defineParameter("gs", gs) 
 ```
 Parameters must be given as (name, value) pairs. In the above, "gs" is the parameter name, and any appearance of "gs" in the symbolic matrix elements will be replaced with the numeric value during collision integration.
 
@@ -33,7 +34,7 @@ gluon.name = "gluon"
 gluon.index = 1
 gluon.type = WallGoCollision.EParticleType.eBoson
 gluon.bInEquilibrium = False
-modelDefinition.defineParticleSpecies(gluon)
+modelDef.defineParticleSpecies(gluon)
 
 # Generic light quark, assumed to remain in thermal equilibrium
 lightQuark = WallGoCollision.ParticleDescription()
@@ -41,8 +42,13 @@ lightQuark.name = "lightQuark"
 lightQuark.index = 2
 lightQuark.type = WallGoCollision.EParticleType.eFermion
 lightQuark.bInEquilibrium = True
-modelDefinition.defineParticleSpecies(lightQuark)
+modelDef.defineParticleSpecies(lightQuark)
 ```
 The above particle species are all defined as "ultrarelativistic" (the default behavior). In **WallGoCollision**, an ultrarelativistic particle species $a$ means that its energy-momentum dispersion relation is approximated as $E_a \approx |p_a|$ in collision integrals. This allows for heavy optimizations and should be preferred whenever the approximation makes sense for your particles. For relaxing this approximation, see [here (TODO! empty link for now)]().
 
-Finally, we should define numerical values for masses that appear in propagators in matrix elements.
+Finally, we should define numerical values for masses that appear in propagators of matrix elements. In **WallGoCollision**, these masses are treated as model parameters analogous to the "gs" parameter defined above, ie. a propagator mass is just another user-defined symbol that can appear in matrix elements and must be given a numberical value. In the matrix elements for this example, the mass-square of a quark propagator is denoted by "mq2" and the mass-square of a gluon propagator is "mg2". For this model we approximate them as their asymptotic QCD thermal masses (same for all quark species):
+```
+modelDef.defineParameter("mq2", gs**2 / 3.0)
+modelDef.defineParameter("mg2", gs**2)
+```
+
