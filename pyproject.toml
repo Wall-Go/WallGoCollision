@@ -21,13 +21,14 @@ tests = [
 ]
 
 [tool.scikit-build]
-cmake.verbose = false
+build.verbose = false
 cmake.build-type = "Release"
 # Run cmake before building wheel
 wheel.cmake = true
 # Include files from these dirs in the wheel (__init__.py etc)
 wheel.packages = ["python/packagedata/WallGoCollision"]
 wheel.exclude = ["__pycache__/*"]
+sdist.include = ["python/packagedata/WallGoCollision/*.pyi"]
 
 [tool.scikit-build.cmake.define]
 # Disable compilation of CPP specific examples
