@@ -1,3 +1,6 @@
+# WallGoCollision
+
+See the [docs](./docs/index.md) for info and quickstart.
 
 ## Installation
 
