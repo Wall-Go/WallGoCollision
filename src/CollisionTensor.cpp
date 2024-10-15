@@ -132,8 +132,6 @@ CollisionResultsGrid CollisionTensor::computeIntegralsForPair(
         std::cerr << "No cached collision integral found for particle pair: ("
             << particle1 << ", " << particle2 << ")" << std::endl;
         
-        assert(false && "Particle pair not found");
-        
         return CollisionResultsGrid(ParticleNamePair("Unknown", "Unknown"), CollisionMetadata());
     }
 
