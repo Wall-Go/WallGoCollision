@@ -225,7 +225,7 @@ int main()
 	// Can also pack the new parameters in a wallgo::ModelParameters object and pass it to the model:
 	wallgo::ModelParameters changedParams;
 	changedParams.add("gs", 0.5);
-	changedParams.add("mg", 0.3);
+	changedParams.add("mg2", 0.3);
 	model.updateParameters(changedParams);
 
 	/* We can also request to compute integrals only for a specific off-equilibrium particle pair.

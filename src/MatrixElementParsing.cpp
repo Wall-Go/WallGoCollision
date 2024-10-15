@@ -33,7 +33,11 @@ bool buildMatrixElementsFromFile(
     const std::unordered_map<std::string, double>& symbols,
     std::map<IndexPair, std::vector<MatrixElement>>& outMatrixElements)
 {
-    if (offEqParticleIndices.size() < 1) return false;
+    if (offEqParticleIndices.size() < 1)
+    {
+        std::cout << "Warning: PhysicsModel contains no out-of-equilibrium particles, loadMatrixElement() does nothing (regarded as failed read)." << std::endl;
+        return false;
+    }
 
     outMatrixElements.clear();
 
