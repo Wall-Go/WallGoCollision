@@ -33,8 +33,6 @@ bool buildMatrixElementsFromFile(
     const std::unordered_map<std::string, double>& symbols,
     std::map<IndexPair, std::vector<MatrixElement>>& outMatrixElements)
 {
-    if (offEqParticleIndices.size() < 1) return false;
-
     outMatrixElements.clear();
 
     std::vector<ReadParticle> parsedParticles;

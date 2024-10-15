@@ -169,6 +169,12 @@ bool PhysicsModel::loadMatrixElements(
 {
     mMatrixElements.clear();
 
+    if (mOffEqIndices.size() < 1)
+    {
+        std::cout << "Warning: PhysicsModel contains no out-of-equilibrium particles, loadMatrixElement() does nothing (treated as success)." << std::endl;
+        return true;
+    }
+
     // Indices of all particles, needed to validate matrix elements (can't have unknown particles as external legs)
     std::vector<int32_t> particleIndices;
     for (auto const& [key, _] : mParticles)

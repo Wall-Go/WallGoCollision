@@ -38,4 +38,4 @@ def test_collisionTensorFull(
 
     assert resultsForPair.valueAt(
         WallGoCollision.GridPoint(*gridPoint)
-    ) == pytest.approx(expected, abs=err)
+    ) == pytest.approx(expected, rel=0.05)
