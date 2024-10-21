@@ -5,12 +5,13 @@ function(GenerateProjectVersion INOUT_VERSION)
         # Get version number from scikit-build
         set(LOCAL_VERSION ${SKBUILD_PROJECT_VERSION})
     else()
+    
         # Attempt to read git tag
         find_package(Git QUIET)
         if (GIT_FOUND)
-
             # Will fail if ran outside a git repo, GIT_DESCRIBE_RESULT for success check
             execute_process(
+                # get most recent tag
                 COMMAND ${GIT_EXECUTABLE} describe --tags --abbrev=0
                 OUTPUT_VARIABLE GIT_TAG
                 RESULT_VARIABLE GIT_DESCRIBE_RESULT
@@ -22,6 +23,8 @@ function(GenerateProjectVersion INOUT_VERSION)
                 # tag is vX.Y.Z, strip the v
                 string(REGEX REPLACE "^v" "" LOCAL_VERSION ${GIT_TAG})
             endif()
+
+            # TODO should ensure result is in strict semantic version format. Will not work for tags like v0.0.1-dev1 
          
         endif()
     endif()

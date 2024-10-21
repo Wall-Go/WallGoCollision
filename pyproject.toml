@@ -12,7 +12,7 @@ build-backend = "scikit_build_core_conan.build"
 name = "WallGoCollision"
 description = "Python bindings for WallGo Collision module"
 readme = {file = "README.md", content-type = "text/markdown"}
-license = {file = "LICENSE"}
+license = {text = "BSD 3.0"}
 # get version from Github using setuptools_scm
 dynamic = ["version"]
 requires-python = ">=3.10"
@@ -36,6 +36,8 @@ wheel.exclude = ["__pycache__/*"]
 
 [tool.setuptools_scm]
 write_to = "python/packagedata/WallGoCollision/_version.py"
+# Increments version if commit is ahead of the last tag
+version_scheme = "guess-next-dev"
 
 [tool.scikit-build.cmake.define]
 # Disable compilation of CPP specific examples
