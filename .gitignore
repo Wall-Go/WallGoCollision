@@ -4,6 +4,7 @@ bin/*
 examples/bin/
 python/package_standalone/WallGoCollision/*
 *_generated.h
+_version.py
 
 # Data files
 *.hdf5

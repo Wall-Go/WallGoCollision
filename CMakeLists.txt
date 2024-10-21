@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.18)
-project(Collision VERSION 0.2.0 LANGUAGES CXX)
 
-list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+
+include(${CMAKE_SOURCE_DIR}/cmake/GenerateProjectVersion.cmake)
+GenerateProjectVersion(WALLGOCOLLISION_VERSION)
+
+project(Collision VERSION ${WALLGOCOLLISION_VERSION} LANGUAGES CXX)
 
 option(USE_CXX20 "Prefer C++20 if available (may allow small optimizations)" ON)
 
