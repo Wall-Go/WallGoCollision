@@ -21,10 +21,11 @@ function(GenerateProjectVersion INOUT_VERSION)
 
             if (GIT_DESCRIBE_RESULT EQUAL 0)
                 # tag is vX.Y.Z, strip the v
-                string(REGEX REPLACE "^v" "" LOCAL_VERSION ${GIT_TAG})
+                string(REGEX REPLACE "^v" "" GIT_TAG ${GIT_TAG})
             endif()
 
-            # TODO should ensure result is in strict semantic version format. Will not work for tags like v0.0.1-dev1 
+            # Strip all extra from semantic version. So leaves only X.Y.Z
+            string(REGEX REPLACE "([0-9]+\\.[0-9]+\\.[0-9]+).*" "\\1" LOCAL_VERSION ${GIT_TAG})
          
         endif()
     endif()
