@@ -22,11 +22,13 @@ function(GenerateProjectVersion INOUT_VERSION)
             if (GIT_DESCRIBE_RESULT EQUAL 0)
                 # tag is vX.Y.Z, strip the v
                 string(REGEX REPLACE "^v" "" GIT_TAG ${GIT_TAG})
-                
+
                 # Strip all extra from semantic version. So leaves only X.Y.Z
                 string(REGEX REPLACE "^([0-9]+\\.[0-9]+\\.[0-9]+).*" "\\1" LOCAL_VERSION ${GIT_TAG})
             endif()
          
+        else()
+            message(STATUS "Could not find package: Git")
         endif()
     endif()
 
