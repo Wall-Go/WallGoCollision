@@ -25,7 +25,7 @@ function(GenerateProjectVersion INOUT_VERSION)
             endif()
 
             # Strip all extra from semantic version. So leaves only X.Y.Z
-            string(REGEX REPLACE "([0-9]+\\.[0-9]+\\.[0-9]+).*" "\\1" LOCAL_VERSION ${GIT_TAG})
+            string(REGEX REPLACE "^([0-9]+\\.[0-9]+\\.[0-9]+).*" "\\1" LOCAL_VERSION ${GIT_TAG})
          
         endif()
     endif()
