@@ -42,7 +42,7 @@ jobs:
 
       - name: Get Conan cache path
         id: conan-cache-path
-        run: echo "CONAN_CACHE=$(conan config home)" >> $GITHUB_ENV
+        run: echo "conan_cache=$(conan config home)" >> $GITHUB_ENV
 
       - name: Cache Conan dependencies
         id: cache-conan
