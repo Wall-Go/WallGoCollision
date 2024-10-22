@@ -16,7 +16,6 @@ function(GenerateProjectVersion INOUT_VERSION)
                 OUTPUT_VARIABLE GIT_TAG
                 RESULT_VARIABLE GIT_DESCRIBE_RESULT
                 OUTPUT_STRIP_TRAILING_WHITESPACE
-                ERROR_QUIET
             )
 
             if (GIT_DESCRIBE_RESULT EQUAL 0)
@@ -28,7 +27,7 @@ function(GenerateProjectVersion INOUT_VERSION)
             endif()
          
         else()
-            message(STATUS "Could not find package: Git")
+            #message(STATUS "Could not find package: Git")
         endif()
     endif()
 
