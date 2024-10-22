@@ -36,6 +36,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-tags: 'true'
       
       - name: Install Conan
         run: pip install conan==2.8.1
@@ -57,7 +59,7 @@ jobs:
 
       # No need to create new Conan profile if we have cache
       - if: ${{ steps.cache-conan.outputs.cache-hit != 'true' }}
-        name: Create new Conan profile
+        name: Create new Conan profile if no cache was hit
         run: conan profile detect
 
       - name: Install dependencies with Conan
