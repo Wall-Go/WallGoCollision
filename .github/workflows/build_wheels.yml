@@ -37,7 +37,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-tags: 'true'
+          fetch-tags: true
       
       - name: Install Conan
         run: pip install conan==2.8.1
@@ -57,7 +57,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ env.cache-name }}-
 
-      # No need to create new Conan profile if we have cache
+      # Create new Conan profile only if we didn't hit cache
       - if: ${{ steps.cache-conan.outputs.cache-hit != 'true' }}
         name: Create new Conan profile if no cache was hit
         run: conan profile detect
