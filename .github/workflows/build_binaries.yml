@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   build:
-    name: Build wheel for {{ matrix.os }}, CPython${{ matrix.python }}
+    name: Compile binaries ${{ matrix.os }}, CPython${{ matrix.python }}
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -37,7 +37,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          #fetch-tags: true
+          # Fetch everything to ensure we get tags
           fetch-depth: 0
       
       - name: Install Conan
@@ -73,5 +73,19 @@ jobs:
       - name: Build WallGoCollision
         run: |
           cmake --build build --config ${{ matrix.build_type }}
+
+      # Installation step to ensure binaries are in known locations for the upload step
+      - name: Install compiled binaries
+        run: |
+          cmake --install build
+
+      # Upload artifacts for use in other workflows
+      - name: Upload WallGoCollision example binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: WallGoCollision-examples
+          path: |
+            examples/bin/QCD*
+            examples/MatrixElements/MatrixElements_QCD.json
 
 
