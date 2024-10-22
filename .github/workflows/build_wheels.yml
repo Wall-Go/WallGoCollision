@@ -40,13 +40,17 @@ jobs:
       - name: Install Conan
         run: pip install conan==2.8.1
 
+      - name: Get Conan cache path
+        id: conan-cache-path
+        run: echo "CONAN_CACHE=$(conan config home)" >> $GITHUB_ENV
+
       - name: Cache Conan dependencies
         id: cache-conan
         uses: actions/cache@v4
         env:
           cache-name: conan2-cache
         with:
-          path: $(conan config home)
+          path: ${{ steps.conan-cache-path.outputs.conan_cache }}
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/conanfile.txt') }}
           restore-keys: |
             ${{ runner.os }}-${{ env.cache-name }}-
