@@ -61,5 +61,14 @@ jobs:
         run: conan profile detect
 
       - name: Install dependencies with Conan
-        run: conan install . --build=missing
+        run: conan install . --build=missing --output-folder=build
+
+      - name: Configure CMake
+        run: |
+          cmake -B build -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake
+      
+      - name: Build WallGoCollision
+        run: |
+          cmake --build build --config ${{ matrix.build_type }}
+
 
