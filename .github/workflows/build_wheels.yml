@@ -21,6 +21,7 @@ jobs:
     matrix:
       include:
         - os: ubuntu-latest
+          build_type: [Release]
           python: [3.10, 3.11, 3.12]
         
         # MacOS x86_64
@@ -40,18 +41,20 @@ jobs:
 
     - name: Cache Conan dependencies
       id: cache-conan
-      uses: actions/cache@v4
+      uses: actions/cache@v3
+      env:
+        cache-name: conan2-cache
       with:
         path: $(conan config home)
-        key: ${{ runner.os }}-conan2-${{ hashFiles('**/conanfile.txt') }}
+        key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/conanfile.txt') }}
         restore-keys: |
-          ${{ runner.os }}-conan2-
+          ${{ runner.os }}-${{ env.cache-name }}-
 
-      # No need to create new Conan profile if we have cache
-      - if: ${{ steps.cache-conan.outputs.cache-hit != 'true' }}
-        name: Create new Conan profile
-        run: conan profile detect
+    # No need to create new Conan profile if we have cache
+    - if: ${{ steps.cache-conan.outputs.cache-hit != 'true' }}
+      name: Create new Conan profile
+      run: conan profile detect
 
-      - name: Install dependencies with Conan
-        run: conan install . --build=missing
+    - name: Install dependencies with Conan
+      run: conan install . --build=missing
 
