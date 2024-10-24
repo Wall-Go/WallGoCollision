@@ -16,7 +16,7 @@ license = {text = "BSD 3.0"}
 # get version from Github using setuptools_scm
 dynamic = ["version"]
 # TEMP: require exactly python 3.11 to make cibuildwheel run faster. Change to >=3.10 for release
-requires-python = "==3.11"
+requires-python = ">=3.11,<3.12"
 
 [project.optional-dependencies]
 tests = [
