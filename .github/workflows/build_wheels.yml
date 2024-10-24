@@ -13,25 +13,22 @@ concurrency:
 
 jobs:
   build:
-    name: Build wheel for ${{ matrix.os }}, CPython${{ matrix.python }}
+    name: Build wheels for ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
 
     strategy:
       # If true, Github will cancel all other jobs in the matrix if any of them fails
       fail-fast: false
       matrix:
-        include:
-          - os: ubuntu-latest
-            build_type: "Release"
-            python: [3.10, 3.11, 3.12]
-          
-          # MacOS x86_64
-          #- os: macos-13
-          #  python: [3.10, 3.11, 3.12]
+          # macos-13 is x86_64, macos-14 is arm64.
+          # cibuildwheel takes care of building for all supported Python versions as stated in pyproject.toml
+          os: [
+              ubuntu-latest,
+              #windows-latest,
+              #macos-13,
+              #macos-14
+            ]
 
-          # MacOS ARM64
-          #- os: macos-14
-          #  python: [3.10, 3.11, 3.12]
 
     steps:
       - name: Checkout code
@@ -63,8 +60,9 @@ jobs:
         name: Create default Conan profile if no cache was hit
         run: conan profile detect
       
-      - name: Build wheels
+      - name: Build and test wheels (cibuildwheel)
         uses: pypa/cibuildwheel@v2.21.3
+
 
       - name: Upload wheels
         uses: actions/upload-artifact@v4
