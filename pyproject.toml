@@ -15,7 +15,8 @@ readme = {file = "README.md", content-type = "text/markdown"}
 license = {text = "BSD 3.0"}
 # get version from Github using setuptools_scm
 dynamic = ["version"]
-requires-python = ">=3.10"
+# TEMP: require exactly python 3.11 to make cibuildwheel run faster. Change to >=3.10 for release
+requires-python = "==3.11"
 
 [project.optional-dependencies]
 tests = [
@@ -45,10 +46,13 @@ USE_OMP = "ON"
 # Disable compilation of CPP specific examples
 BUILD_EXAMPLES = "OFF"
 
-
 # Editable installs come with a bunch of issues, see https://scikit-build-core.readthedocs.io/en/latest/configuration.html#editable-installs
 # In particular, pip tends to delete the build dir after installation, so we lose the Conan toolchain file etc.
 # The docs recommend to preinstall dependencies when doing editable installs
 
 [tool.scikit-build-core-conan]
 build = "missing"
+
+[tool.cibuildwheel]
+test-requires = "pytest"
+test-command = "pytest {package}/tests"
