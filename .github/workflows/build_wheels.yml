@@ -1,0 +1,73 @@
+name: Build Wheels
+
+on:
+  push:
+    branches:
+      # temp
+      - TestCIBuildWheel
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+
+jobs:
+  build:
+    name: Build wheel for ${{ matrix.os }}, CPython${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      # If true, Github will cancel all other jobs in the matrix if any of them fails
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            build_type: "Release"
+            python: [3.10, 3.11, 3.12]
+          
+          # MacOS x86_64
+          #- os: macos-13
+          #  python: [3.10, 3.11, 3.12]
+
+          # MacOS ARM64
+          #- os: macos-14
+          #  python: [3.10, 3.11, 3.12]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # Fetch everything to ensure we get tags
+          fetch-depth: 0
+      
+      - name: Install Conan
+        run: pip install conan==2.8.1
+
+      - name: Get Conan cache path
+        id: conan-cache-path
+        run: echo "conan_cache=$(conan config home)" >> $GITHUB_OUTPUT
+
+      - name: Cache Conan dependencies
+        id: cache-conan
+        uses: actions/cache@v4
+        env:
+          cache-name: conan2-cache
+        with:
+          path: ${{ steps.conan-cache-path.outputs.conan_cache }}
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/conanfile.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.cache-name }}-
+
+      # Create new Conan profile only if we didn't hit cache
+      - if: ${{ steps.cache-conan.outputs.cache-hit != 'true' }}
+        name: Create default Conan profile if no cache was hit
+        run: conan profile detect
+      
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.21.3
+
+      - name: Upload wheels
+        uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          path: ./wheelhouse/*.whl

@@ -40,8 +40,11 @@ write_to = "python/packagedata/WallGoCollision/_version.py"
 version_scheme = "guess-next-dev"
 
 [tool.scikit-build.cmake.define]
+BUILD_PYTHON_MODULE = "ON"
+USE_OMP = "ON"
 # Disable compilation of CPP specific examples
 BUILD_EXAMPLES = "OFF"
+
 
 # Editable installs come with a bunch of issues, see https://scikit-build-core.readthedocs.io/en/latest/configuration.html#editable-installs
 # In particular, pip tends to delete the build dir after installation, so we lose the Conan toolchain file etc.
