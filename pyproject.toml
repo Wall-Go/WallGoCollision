@@ -1,18 +1,14 @@
-# Uses scikit-build-core and its conan plugin scikit-build-core-conan to invoke install dependencies with Conan, then invoke CMake normally.
-# Makes the Collision module installable with pip:
-# pip install . [-v]
-# The -v is necessary to see what is going on under the hood (Conan, CMake messages).
-# Note that build artifacts will go wherever pip decides to put them .
-
 [build-system]
 requires = ["scikit-build-core-conan>=0.3.1", "pybind11>=2.13.1", "mypy>=1.11.1"]
 build-backend = "scikit_build_core_conan.build"
 
 [project]
 name = "WallGoCollision"
-version = "0.1.0"
 description = "Python bindings for WallGo Collision module"
-license = {text = "MIT"}
+readme = {file = "README.md", content-type = "text/markdown"}
+license = {text = "BSD 3.0"}
+# get version from Github using setuptools_scm
+dynamic = ["version"]
 requires-python = ">=3.10"
 
 [project.optional-dependencies]
@@ -21,6 +17,9 @@ tests = [
 ]
 
 [tool.scikit-build]
+minimum-version = "0.10"
+metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"
+sdist.include = ["python/packagedata/WallGoCollision/_version.py", "python/packagedata/WallGoCollision/*.pyi"]
 build.verbose = false
 cmake.build-type = "Release"
 # Run cmake before building wheel
@@ -28,15 +27,34 @@ wheel.cmake = true
 # Include files from these dirs in the wheel (__init__.py etc)
 wheel.packages = ["python/packagedata/WallGoCollision"]
 wheel.exclude = ["__pycache__/*"]
-sdist.include = ["python/packagedata/WallGoCollision/*.pyi"]
+
+[tool.setuptools_scm]
+write_to = "python/packagedata/WallGoCollision/_version.py"
+# Increments version if commit is ahead of the last tag
+version_scheme = "guess-next-dev"
 
 [tool.scikit-build.cmake.define]
+BUILD_PYTHON_MODULE = "ON"
+USE_OMP = "ON"
 # Disable compilation of CPP specific examples
 BUILD_EXAMPLES = "OFF"
-
-# Editable installs come with a bunch of issues, see https://scikit-build-core.readthedocs.io/en/latest/configuration.html#editable-installs
-# In particular, pip tends to delete the build dir after installation, so we lose the Conan toolchain file etc.
-# The docs recommend to preinstall dependencies when doing editable installs
+# Use env variable to mandate OpenMP during build. Used with cibuildwheel so that we don't accidentally build wheels without OMP
+REQUIRE_OMP = {env="WALLGO_REQUIRE_OMP", default="OFF"}
 
 [tool.scikit-build-core-conan]
 build = "missing"
+
+[tool.cibuildwheel]
+test-requires = "pytest"
+test-command = "pytest {project}/python/tests"
+# verbosity=1 corresponds to -v in pip
+build-verbosity = 1
+# Always require OMP with cibuildwheel. See cmake.defines above
+environment = "WALLGO_REQUIRE_OMP=ON"
+macos.environment = "WALLGO_USE_CONAN_OMP=1"
+# Only do 64bit manylinux archs for now, some 32bit manylinux archs have issues obtaining CMake during build
+linux.archs = ["auto64"]
+macos.archs = ["auto"]
+windows.archs = ["auto64"]
+# skip musllinux because the gsl recipe from conan failed to compile on them
+skip = "*musllinux_*"
