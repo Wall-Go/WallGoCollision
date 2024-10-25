@@ -8,6 +8,8 @@ version: 2
 # Set the build setup
 build:
   os: ubuntu-24.04
+  tools:
+    python:
 
 mkdocs:
   configuration: mkdocs.yml
