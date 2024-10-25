@@ -7,6 +7,11 @@ Doing so would require proper hiding ofSTL objects from the public interface (mo
 AND manually mark appropriate class members for exporting (not done). */
 #define WALLGO_API WALLGO_EXPORT
 
+// Version number passed from CMake
+#ifndef WG_VERSION
+    #define WG_VERSION "0.0.0"
+#endif
+
 #define WG_STRINGIFY(x) #x
 
 #ifdef _MSC_VER

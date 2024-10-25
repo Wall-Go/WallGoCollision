@@ -71,6 +71,9 @@ PYBIND11_MODULE(WG_PYTHON_MODULE_NAME, m)
             return bShouldExit;
         };
 
+    
+    m.def("getVersionNumber", []() { return py::str(WG_VERSION); }, "Returns WallGoCollision version number.");
+
     // Bind GSL seed setter
     m.def("setSeed", &wallgo::setSeed, py::arg("seed"), "Set seed used by Monte Carlo integration. Default is 0.");
 

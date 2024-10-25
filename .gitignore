@@ -4,6 +4,7 @@ bin/*
 examples/bin/
 python/package_standalone/WallGoCollision/*
 *_generated.h
+_version.py
 
 # Data files
 *.hdf5
@@ -62,6 +63,7 @@ wheels/
 docs/_build
 *.pyd
 *.pyi
+*.whl
 
 # Weird mac things
 *.DS_Store
