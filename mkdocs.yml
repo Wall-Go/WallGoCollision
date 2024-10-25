@@ -7,7 +7,7 @@ plugins:
 markdown_extensions:
   - footnotes
   - markdown_include.include:
-      base_path: .
+    base_path: ./docs
   - pymdownx.arithmatex:
     generic: true
 
