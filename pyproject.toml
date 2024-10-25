@@ -9,8 +9,7 @@ readme = {file = "README.md", content-type = "text/markdown"}
 license = {text = "BSD 3.0"}
 # get version from Github using setuptools_scm
 dynamic = ["version"]
-# TEMP: require exactly python 3.11 to make cibuildwheel run faster. Change to >=3.10 for release
-requires-python = ">=3.12,<3.13"
+requires-python = ">=3.10"
 
 [project.optional-dependencies]
 tests = [
