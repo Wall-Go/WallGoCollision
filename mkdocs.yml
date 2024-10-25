@@ -5,6 +5,7 @@ theme:
 plugins:
   - search
 markdown_extensions:
+  - pymdownx.betterem
   - pymdownx.arithmatex:
       generic: true
 extra_javascript:
