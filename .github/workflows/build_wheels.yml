@@ -22,10 +22,10 @@ jobs:
           # macos-13 is x86_64, macos-14 is arm64.
           # cibuildwheel takes care of building for all supported Python versions as stated in pyproject.toml
           os: [
-              ubuntu-latest,
+              #ubuntu-latest,
               windows-latest,
-              macos-13,
-              macos-14
+              #macos-13,
+              #macos-14
             ]
 
 
@@ -43,6 +43,7 @@ jobs:
 
       - name: Get Conan cache path
         id: conan-cache-path
+        shell: bash
         run: echo "conan_cache=$(conan config home)" >> $GITHUB_OUTPUT
 
       - name: Cache Conan dependencies
