@@ -63,6 +63,7 @@ wheels/
 docs/_build
 *.pyd
 *.pyi
+*.whl
 
 # Weird mac things
 *.DS_Store
