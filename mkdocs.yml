@@ -6,3 +6,5 @@ plugins:
   - search
 markdown_extensions:
   - footnotes
+  - markdown_include.include:
+      base_path: .
