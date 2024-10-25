@@ -2,6 +2,8 @@ from conan import ConanFile
 from conan.tools.build import check_min_cppstd
 from conan.errors import ConanInvalidConfiguration
 
+import os
+
 class WallGoCollisionRecipe(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     generators = "CMakeToolchain", "CMakeDeps"
@@ -12,21 +14,24 @@ class WallGoCollisionRecipe(ConanFile):
         self.requires("pybind11/2.11.1")
         self.requires("muparser/2.3.4")
         
-        # llvm-openmp requires compiler.cppstd>=17
-        self.requires("llvm-openmp/18.1.8")
-        
+        """Require llvm-openmp recipe if env variable is set.
+        This version of OMP doesn't seem to work universally with our lib, so keep the option to use hidden.
         """
-        if self.settings.compiler.cppstd:
-            try:
-                check_min_cppstd(self, 17)
-                self.requires("llvm-openmp/18.1.8")
-            except ConanInvalidConfiguration as e:
-                print("\n\n!! Warning from WallGoCollision !!\n"
-                      "Installing OpenMP through Conan requires compiler.cppstd >= 17 in your Conan 'default' profile.\n"
-                      "This is non-fatal: the build will attempt to use your system-wide OpenMP installation.\n\n"
-                      )
-        """
+        ompEnvVar = os.getenv("WALLGO_USE_CONAN_OMP", "0")
+        if ompEnvVar != "0":
+
+            # llvm-openmp requires compiler.cppstd>=17
+            if self.settings.compiler.cppstd:
+                try:
+                    check_min_cppstd(self, 17)
+                    self.requires("llvm-openmp/18.1.8")
+                except ConanInvalidConfiguration as e:
+                    raise RuntimeError("\n\n!! Error from WallGoCollision !!\n"
+                        "You have set the 'WALLGO_USE_CONAN_OMP' environment variable which downloads and compiles OpenMP through Conan. "
+                        "This option requires compiler.cppstd >= 17 in your Conan 'default' profile. Please modify your profile accordingly, "
+                        "or set the environment variable to 0 or undefine it.\n\n"
+                        )
         
         
     def build_requirements(self):
-        self.tool_requires("cmake/[>=3.24]")
+        self.tool_requires("cmake/[>=3.18]")

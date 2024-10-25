@@ -30,7 +30,9 @@ find_package(HDF5 REQUIRED CXX)
 find_package(GSL REQUIRED CXX)
 find_package(muparser REQUIRED)
 
-if (USE_OMP)
+if (REQUIRE_OMP)
+    find_package(OpenMP REQUIRED)
+elseif (USE_OMP)
     find_package(OpenMP)
 endif()
 

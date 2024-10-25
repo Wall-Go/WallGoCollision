@@ -10,7 +10,7 @@ license = {text = "BSD 3.0"}
 # get version from Github using setuptools_scm
 dynamic = ["version"]
 # TEMP: require exactly python 3.11 to make cibuildwheel run faster. Change to >=3.10 for release
-requires-python = ">=3.11,<3.12"
+requires-python = ">=3.12,<3.13"
 
 [project.optional-dependencies]
 tests = [
@@ -39,7 +39,8 @@ BUILD_PYTHON_MODULE = "ON"
 USE_OMP = "ON"
 # Disable compilation of CPP specific examples
 BUILD_EXAMPLES = "OFF"
-
+# Use env variable to mandate OpenMP during build. Used with cibuildwheel so that we don't accidentally build wheels without OMP
+REQUIRE_OMP = {env="WALLGO_REQUIRE_OMP", default="OFF"}
 
 [tool.scikit-build-core-conan]
 build = "missing"
@@ -49,6 +50,8 @@ test-requires = "pytest"
 test-command = "pytest {project}/python/tests"
 # verbosity=1 corresponds to -v in pip
 build-verbosity = 1
+# Always require OMP with cibuildwheel. See cmake.defines above
+environment = "WALLGO_REQUIRE_OMP=ON"
 # Only do 64bit manylinux archs for now, some 32bit manylinux archs have issues obtaining CMake during build
 linux.archs = ["auto64"]
 macos.archs = ["auto"]

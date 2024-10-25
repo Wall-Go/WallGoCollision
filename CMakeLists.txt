@@ -49,8 +49,13 @@ endif()
 
 ## Use OpenMP by default
 option(USE_OMP "Build with OpenMP support" ON)
+option(REQUIRE_OMP "Require OpenMP and abort the build if not present" OFF)
 option(BUILD_PYTHON_MODULE "Build Python module" ON)
 option(BUILD_EXAMPLES "Build WallGo/Collision C++ examples" ON)
+
+if (REQUIRE_OMP)
+    set(USE_OMP ON)
+endif()
 
 if(BUILD_PYTHON_MODULE)
 	add_compile_definitions(WITH_PYTHON=1)
