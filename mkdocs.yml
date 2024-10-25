@@ -2,5 +2,7 @@ site_name: WallGoCollision
 theme:
   name: readthedocs
   highlightjs: true
+plugins:
+  - search
 markdown_extensions:
-  - footnoes
+  - footnotes
