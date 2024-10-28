@@ -49,9 +49,9 @@ extensions = [
 # autoclass_content = "both"  # 'both', 'init' or 'class'
 html_show_sourcelink = False  # Remove 'view source code' from top of page (for html, not python)
 # autodoc_inherit_docstrings = True  # If no docstring, inherit from base class
-# set_type_checking_flag = True  # Enable 'expensive' imports for sphinx_autodoc_typehints
+# # set_type_checking_flag = True  # Enable 'expensive' imports for sphinx_autodoc_typehints
 # autodoc_typehints = "description" # Sphinx-native method. Not as good as sphinx_autodoc_typehints
-add_module_names = False # Remove namespaces from class/method signatures
+# add_module_names = False # Remove namespaces from class/method signatures
 
 myst_enable_extensions = ["colon_fence", "dollarmath", "amsmath"]
 
@@ -62,7 +62,7 @@ bibtex_bibfiles = ['refs.bib']
 templates_path = ["_templates"]
 
 # Include just markdown files
-source_suffix = [".md"]
+source_suffix = [".rst", ".md"]
 
 # The master toctree document.
 master_doc = "index"
