@@ -18,10 +18,10 @@ contact.md
 license.md
 ```
 
-**WallGoCollision** is a scientific library for computing Boltzmann collision integrals for use with the Python package [**WallGo**](https://wallgo.readthedocs.io). The library is written in C++17 and can be compiled as a Python module for seamless interoperation with WallGo. Collision integrations are typically by far the most computationally intensive part of the **WallGo** wall velocity pipeline. **WallGoCollision** performs these integrations using native C++, allowing for performance optimizations that would not be possible in a pure Python package.
+[**WallGoCollision**](https://github.com/Wall-Go/WallGoCollision) is a scientific library for computing Boltzmann collision integrals for use with the Python package [**WallGo**](https://wallgo.readthedocs.io). The library is written in C++17 and can be compiled as a Python module for seamless interoperation with WallGo. Collision integrations are typically by far the most computationally intensive part of the **WallGo** wall velocity pipeline. **WallGoCollision** performs these integrations using native C++, allowing for performance optimizations that would not be possible in a pure Python package.
 
 :::{important}
-**WallGoCollision** is still in beta and may undergo large changes without notice. Use with care.
+[**WallGoCollision**](https://github.com/Wall-Go/WallGoCollision) is still in beta and may undergo large changes without notice. Use with care.
 :::
 
 ## What it does
