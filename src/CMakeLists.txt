@@ -3,6 +3,8 @@ file(GLOB_RECURSE HEADERS "*.h" "*.inl")
 
 add_library(${WALLGO_LIB} ${SOURCES} ${HEADERS})
 
+target_compile_definitions(${WALLGO_LIB} PUBLIC WG_VERSION="${CMAKE_PROJECT_VERSION}")
+
 # Python module always has shared linkage, so the main lib needs PIC too if building for Python
 if(BUILD_SHARED_LIBS OR BUILD_PYTHON_MODULE)
     set(NEEDS_PIC ON)
@@ -28,7 +30,9 @@ find_package(HDF5 REQUIRED CXX)
 find_package(GSL REQUIRED CXX)
 find_package(muparser REQUIRED)
 
-if (USE_OMP)
+if (REQUIRE_OMP)
+    find_package(OpenMP REQUIRED)
+elseif (USE_OMP)
     find_package(OpenMP)
 endif()
 
