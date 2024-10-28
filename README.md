@@ -1,14 +1,16 @@
 # WallGoCollision
 
-See the [docs](./docs/index.md) for info and quickstart.
+See the [docs](./docs/source/index.md) for info and quickstart.
 
 ## Installation
 
 You must have a C++17 compliant compiler (gcc, clang, MSVC etc) and CMake (version 3.18 or newer) installed.
 
-# Installing the Python extension module only (with pip)
+### Installing the Python extension module only (with pip)
 
-```pip install . -v```
+```
+pip install . -v
+```
 
 This works by invoking a CMake build via the scikit-core-build pyproject backend, and its Conan extension for handling dependencies with other C++ libraries.
 It produces a Python package that gets installed to pip's default location (usually ```site-packages/```). To use in your Python projects you only have to ```import WallGoCollision```.
@@ -34,7 +36,7 @@ For example, the default C++ standard (```cppstd```) in gcc 9 is gnu14 and may n
 
 TODO: Compile binaries using Github workflows for common OS/Python version combinations and upload those to PyPi. 
 
-# CMake installation
+### CMake installation
 
 CMake is used as the build system, but dependencies need to be installed first (see below). Once you have installed the dependencies you can compile as:
 ```
@@ -51,7 +53,7 @@ We compile with OpenMP support by default, needed for parallel evaluation of int
 **Note:** On Windows systems you may have to specify the build configuration explicitly:
 ```cmake --build build --config Release```
 
-# Installing dependenciens with Conan
+### Installing dependenciens with Conan
 
 Easiest way of handling the dependencies is with the Conan package manager (can be installed with eg. ```pip```). We require Conan version >= 2.0. The build proceeds as:
 ```
@@ -61,7 +63,7 @@ cmake --build build
 cmake --install build
 ```
 
-# Manually installing dependencies
+### Manually installing dependencies
 
 Linux:
 ```
@@ -97,5 +99,3 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-#

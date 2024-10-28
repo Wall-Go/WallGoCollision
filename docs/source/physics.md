@@ -4,7 +4,9 @@ Here, we give a brief overview on the physics background of the WallGo Collision
 
 The WallGo Collision package computes the collision matrix, $\mathcal C^{\text{lin}}_{ab}$, in the linearized collision term of a Boltzmann equation:
 
-$$\left(p^\mu \partial_\mu + \frac{1}{2}\vec{\nabla }m_a^2\cdot \nabla_{\vec{p}}\right) f^a = -\mathcal C^{\text{lin}}_{ab}[\delta f^b].$$
+$$
+\left(p^\mu \partial_\mu + \frac{1}{2}\vec{\nabla }m_a^2\cdot \nabla_{\vec{p}}\right) f^a = -\mathcal C^{\text{lin}}_{ab}[\delta f^b].
+$$
 
 Here, the indices $a,b$ refer to different particle species, $f^a$ is the particle distribution function and $\delta f^a$ is the deviation from the equilibrium distribution.
 The Boltzmann equation plays an important role for accurately determining the velocity of a bubble wall: It describes the evolution of the off-equilibrium particle distribution functions, $\delta f^b$, which can induce a friction force on the moving wall.

@@ -1,4 +1,4 @@
-# WallGoCollision quickstart
+# Quickstart
 
 In order to compute collision integrals with **WallGoCollision** you have to
 1) Create a `PhysicsModel` object (particle and model parameter definitions).
@@ -6,9 +6,9 @@ In order to compute collision integrals with **WallGoCollision** you have to
 3) Use the model to create a `CollisionTensor` object and pass it the size of your momentum/polynomial grid.
 4) Calling `computeIntegralsAll()` from your `CollisionTensor` computes all required integrals for your particle content and grid size. The results can be stored in binary `.hdf5` format and later loaded into the **WallGo** Boltzmann solver.
 
-This page demonstrates **WallGoCollision** use for a Boltzmann system of one fermion and one boson species, and contains also an arbitrary number of identical "light" fermions that are assumed to remain in thermal equilibrium but appear in matrix elements. The following is written using the Python API. See [the examples directory](../examples) for code examples using the C++ API. 
+This page demonstrates **WallGoCollision** use for a Boltzmann system of one fermion and one boson species, and contains also an arbitrary number of identical "light" fermions that are assumed to remain in thermal equilibrium but appear in matrix elements. The following is written using the Python API. See [the examples directory](https://github.com/Wall-Go/WallGoCollision/tree/main/examples) for code examples using the C++ API. 
 
-The following assumes you have the **WallGoCollision** Python module [installed](../README.md). Load it in your Python program with `import WallGoCollision`.
+The following assumes you have the **WallGoCollision** Python module [installed](../../README.md). Load it in your Python program with `import WallGoCollision`.
 
 ## Defining the model
 
@@ -64,7 +64,7 @@ Once created, the particle and parameter content of a `PhysicsModel` is fixed an
 
 The next step is to specify what collision processes are allowed in the model. This is done by loading symbolic (ie. math expressions) matrix elements for the relevant processes from an external file. Finding matrix elements for a given particle physics model is an exercise in field theory and not within capabilities of **WallGoCollision**. The companion Mathematica package [**WallGoMatrix**](https://github.com/Wall-Go/WallGoMatrix) can be used to generate matrix elements for arbitrary models, directly in the format required to **WallGoCollision**.
 
-**WallGoCollision** supports matrix element parsing in JSON format (needs `.json` file extension) or from generic text files (legacy option). The JSON format is generally recommended for better validation; the `.json` matrix elements relevant for this example are available [here](../examples/MatrixElements/MatrixElements_QCD.json). A legacy `.txt` version is available [here](../examples/MatrixElements/MatrixElements_QCD.txt), note that the formatting must be exactly as shown in the file for parsing to work. Each matrix element must specify indices of external particles participating in the collision process, and a symbolic expression that is typically a function of Mandelstam variables (denoted by reserved symbols "_s", "_t", "_u") and of any user-specified symbols (such as "gs" in this example).
+**WallGoCollision** supports matrix element parsing in JSON format (needs `.json` file extension) or from generic text files (legacy option). The JSON format is generally recommended for better validation; the `.json` matrix elements relevant for this example are available [here](../../examples/MatrixElements/MatrixElements_QCD.json). A legacy `.txt` version is available [here](../../examples/MatrixElements/MatrixElements_QCD.txt), note that the formatting must be exactly as shown in the file for parsing to work. Each matrix element must specify indices of external particles participating in the collision process, and a symbolic expression that is typically a function of Mandelstam variables (denoted by reserved symbols "_s", "_t", "_u") and of any user-specified symbols (such as "gs" in this example).
 
 Matrix elements are loaded to a PhysicsModel as follows:
 ```
@@ -97,4 +97,4 @@ This is typically a very long running functions for nontrivial models and grid s
 # Replace with your output directory
 results.writeToIndividualHDF5("CollisionOutDir/")
 ```
-This creates a separate `.hdf5` for each pair of out-of-equilibrium particles in the model in the specified output directory. The data can then be readily loaded into [**WallGo**](https://github.com/Wall-Go/WallGo).
+This creates a separate `.hdf5` for each pair of out-of-equilibrium particles in the model in the specified output directory. The data can then be readily loaded into [**WallGo**](https://wallgo.readthedocs.io).
