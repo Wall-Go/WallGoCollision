@@ -46,6 +46,9 @@ USE_OMP = "ON"
 BUILD_EXAMPLES = "OFF"
 # Use env variable to mandate OpenMP during build. Used with cibuildwheel so that we don't accidentally build wheels without OMP
 REQUIRE_OMP = {env="WALLGO_REQUIRE_OMP", default="OFF"}
+# Require at least macOS 11 if building for mac. Needed because some c++17 features require 10.15 but cibuildwheel uses 10.9 by default.
+# Here we require 11 to be on safe side.
+MACOSX_DEPLOYMENT_TARGET = "11.0"
 
 [tool.scikit-build-core-conan]
 build = "missing"
