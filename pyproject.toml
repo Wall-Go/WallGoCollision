@@ -51,7 +51,8 @@ test-command = "pytest {project}/python/tests"
 build-verbosity = 1
 # Always require OMP with cibuildwheel. See cmake.defines above
 environment = "WALLGO_REQUIRE_OMP=ON"
-macos.environment = "WALLGO_USE_CONAN_OMP=1"
+# Require at least macOS 11 since the default 10.9 is too low for some C++17 features
+macos.environment = {WALLGO_USE_CONAN_OMP="1", MACOSX_DEPLOYMENT_TARGET="11.0"}
 # Only do 64bit manylinux archs for now, some 32bit manylinux archs have issues obtaining CMake during build
 linux.archs = ["auto64"]
 macos.archs = ["auto"]
