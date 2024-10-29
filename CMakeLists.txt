@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.18)
 
+# Require at least macOS 11 if building for mac. Needed because some c++17 features require 10.15 but cibuildwheel uses 10.9 by default.
+# Here we require 11 to be on safe side.
+set(MACOSX_DEPLOYMENT_TARGET 11.0)
+
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 include(${CMAKE_SOURCE_DIR}/cmake/GenerateProjectVersion.cmake)
