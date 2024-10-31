@@ -17,19 +17,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+    - name: Checkout code
       uses: actions/checkout@v4
       with:
         # Fetch everything to ensure we get tags
         fetch-depth: 0
 
-      - name: Install build
+    - name: Install build
       run: pip install build
         
-      - name: Build sdist (.tar.gz)
+    - name: Build sdist (.tar.gz)
       run: python -m build --sdist --verbose
 
-      - name: Upload sdist (.tar.gz)
+    - name: Upload sdist (.tar.gz)
       uses: actions/upload-artifact@v4
       with:
         name: wallgocollision-${{ github.ref_name }}.tar.gz
@@ -37,11 +37,9 @@ jobs:
 
   publish-to-testpypi:
     runs-on: ubuntu-latest
-
     name: Publish built wheels to TestPyPI
     needs:
       - build-sdist
-    runs-on: ubuntu-latest
 
     environment:
       name: testpypi
@@ -51,19 +49,19 @@ jobs:
       id-token: write  # IMPORTANT: mandatory for trusted publishing
 
     steps:
-      - name: Download all the wheels
-        uses: actions/download-artifact@v4
-        with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
-          path: ./wheelhouse/*.whl
+    - name: Download all the wheels
+      uses: actions/download-artifact@v4
+      with:
+        name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+        path: ./wheelhouse/*.whl
 
-      - name: Download the sdist
-        uses: actions/download-artifact@v4
-        with:
-          name: wallgocollision-${{ github.ref_name }}.tar.gz
-          path: ./dist/*.whl
+    - name: Download the sdist
+      uses: actions/download-artifact@v4
+      with:
+        name: wallgocollision-${{ github.ref_name }}.tar.gz
+        path: ./dist/*.whl
 
-      - name: Publish WallGoCollision to TestPyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          repository-url: https://test.pypi.org/legacy/
+    - name: Publish WallGoCollision to TestPyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        repository-url: https://test.pypi.org/legacy/
