@@ -4,7 +4,7 @@ In order to compute collision integrals with **WallGoCollision** you have to
 1) Create a `PhysicsModel` object (particle and model parameter definitions).
 2) Load in symbolic matrix elements to the model.
 3) Use the model to create a `CollisionTensor` object and pass it the size of your momentum/polynomial grid.
-4) Calling `computeIntegralsAll()` from your `CollisionTensor` computes all required integrals for your particle content and grid size. The results can be stored in binary `.hdf5` format and later loaded into the **WallGo** Boltzmann solver.
+4) Use `computeIntegralsAll()` from this `CollisionTensor` object to compute all required integrals for your particle content and grid size. The results can be stored in binary `.hdf5` format and later loaded into the **WallGo** Boltzmann solver.
 
 This page demonstrates **WallGoCollision** use for a Boltzmann system of one fermion and one boson species, and contains also an arbitrary number of identical "light" fermions that are assumed to remain in thermal equilibrium but appear in matrix elements. The following is written using the Python API. See [the examples directory](https://github.com/Wall-Go/WallGoCollision/tree/main/examples) for code examples using the C++ API. 
 
@@ -20,7 +20,7 @@ modelDef.defineParameter("gs", gs)
 ```
 Parameters must be given as (name, value) pairs. The value must be floating-point type or convertible to such, eg. complex numbers are not allowed. In the above, "gs" is the parameter name, and any appearance of "gs" in the symbolic matrix elements will be replaced with the numeric value during collision integration.
 
-Next we define our particle content using the ParticleDefinition class. Each particle species must have a unique name (string) as well as a unique integer identifier ("particle index"). The index is used to associate loaded matrix elements with the correct particles. Additionally, you must specify the particle statistics type (boson or fermion), and whether the species is assumed to remain in thermal equilibrium. The latter can be used to reduce the number of collision integrations for models containing particle species for which deviations from equilibrium are negligible. Here we define a "top quark" and a "gluon" as out-of-equilibrium particles, and a generic "light quark" that is kept in equilibrium.
+Next we define our particle content using the ParticleDefinition class. Each particle species must have a unique name (string) as well as a unique integer identifier ("particle index"). The index is used to associate loaded matrix elements with the correct particles. Additionally, you must specify the particle statistics type (boson or fermion), and whether the species is assumed to remain in thermal equilibrium. The latter can be used to reduce the number of collision integrations for models containing particle species for which deviations from equilibrium are negligible. Here we define a "Top Quark" and a "Gluon" as out-of-equilibrium particles, and a generic "Light Quark" that is kept in equilibrium.
 ```
 topQuark = WallGoCollision.ParticleDescription()
 topQuark.name = "Top"

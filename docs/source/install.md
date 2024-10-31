@@ -1,11 +1,16 @@
-# Installing WallGoCollision
+# Installation
 
-Here we give detailed installation instructions, and installation options. For the simplest installation, see the [quickstart](quickstart.md).
+WallGoCollision can be installed with pip, using:
 
-You must have a C++17 compliant compiler (gcc, clang, MSVC etc) and CMake (version 3.18 or newer) installed.
+    pip install WallGoCollision
+
+If you have an existing installation, add the flag `--upgrade` to install the latest (stable) release.
+
+Alternatively, below we give details on how to build the latest (unstable) development version from the repository. To build WallGoCollision from source, you must have a C++17 compliant compiler (gcc, clang, MSVC etc) and CMake (version 3.18 or newer) installed.
 
 ### Installing the Python extension module only (with pip)
 
+After cloning the [WallGoCollision repository](https://github.com/Wall-Go/WallGoCollision), run
 ```
 pip install . -v
 ```
@@ -82,20 +87,3 @@ pip install "pybind11[global]"
 This installation needs to be global, otherwise pip doesn't install the required CMake files. Alternatively, you could install pybind11 through `conda` or build it directly from source.
 
 For Linux systems, `muparser` needs to be manually installed from source. Please follow the installation instructions at https://github.com/beltoforion/muparser.
-
-## License
-
-Copyright (c) 2024 Andreas Ekstedt, Oliver Gould, Joonas Hirvonen,
-Benoit Laurent, Lauri Niemi, Philipp Schicho, and Jorinde van de Vis.
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
