@@ -1,4 +1,4 @@
-name: WallGoCollision build and Python tests
+name: Publish to TestPyPi
 
 permissions:
   pull-requests: read
@@ -6,13 +6,14 @@ permissions:
 on:
   workflow_run:
     workflows: ["Build Wheels"]
-    branches: [BuildWheels]  # temp
     types: 
       - completed
 
 jobs:
   build-sdist:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Build sdist (.tar.gz)
+    # Build a tar.gz of the package with standard metadata
     runs-on: ubuntu-latest
 
     steps:
