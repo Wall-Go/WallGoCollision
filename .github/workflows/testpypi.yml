@@ -2,12 +2,13 @@ name: Publish to TestPyPi
 
 permissions:
   pull-requests: read
+  actions: read
 
 on:
   workflow_run:
-    workflows: ["Build Wheels"]
-    types: 
-      - completed
+    workflows: [Build Wheels]
+    types: [completed]
+    branches: [BuildWheels]
 
 jobs:
   build-sdist:
