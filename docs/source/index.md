@@ -4,9 +4,9 @@
 :hidden:
 :caption: WallGoCollisions
 :maxdepth: 3
-quickstart.md
 install.md
 physics.md
+quickstart.md
 integration.md
 ```
 
