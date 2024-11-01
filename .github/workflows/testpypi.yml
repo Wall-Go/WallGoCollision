@@ -8,13 +8,11 @@ on:
   workflow_run:  # This only works if the workflow is on the default branch
     workflows: [Build Wheels]
     types: [completed]
-    branches: [BuildWheels]
-  push:
-    branches: [BuildWheels]
+    branches: [BuildWheels, main]
 
 jobs:
   build-sdist:
-    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Build sdist (.tar.gz)
     # Build a tar.gz of the package with standard metadata
     runs-on: ubuntu-latest
