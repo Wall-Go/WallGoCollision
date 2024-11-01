@@ -51,7 +51,9 @@ Finally, we should define numerical values for masses that appear in propagators
 modelDef.defineParameter("mq2", gs**2 / 3.0)
 modelDef.defineParameter("mg2", gs**2)
 ```
-:::{note} Any dimensionful parameters must be given in units of the temperature. Therefore the above corresponds to eg. $\frac13 g_s^2 T^2$ for the quark mass-square. :::
+:::{note}
+Any dimensionful parameters must be given in units of the temperature. Therefore the above corresponds to eg. $\frac13 g_s^2 T^2$ for the quark mass-square.
+:::
 
 To finalize our model definition we create a concrete `PhysicsModel` based on the information in our `modelDef` object:
 ```
