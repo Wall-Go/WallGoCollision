@@ -1,6 +1,6 @@
 # Configuring the integrator
 
-Collision integrations in **WallGoCollision** are performed using the Vegas Monte Carlo algorithm (G. P. Lepage, J. Comput. Phys. 27 (1978) 192) which is an adaptive probabilistic integrator. We use the [GSL implementation](https://www.gnu.org/software/gsl/doc/html/montecarlo.html#vegas) of the algorithm. **WallGoCollision** applies it to 5-dimensional integrals of form described in the [physics documentation](./physics.md). The set of integration variables consists of four angles (or cosines of thereof) and one radial variable, corresponding to magnitude of the incoming $\mathbf{p}_2$ momentum.
+Collision integrations in **WallGoCollision** are performed using the Vegas Monte Carlo algorithm{footcite}`Lepage:1977sw` which is an adaptive probabilistic integrator. We use the [GSL implementation](https://www.gnu.org/software/gsl/doc/html/montecarlo.html#vegas) of the algorithm. **WallGoCollision** applies it to 5-dimensional integrals of form described in the [physics documentation](./physics.md). The set of integration variables consists of four angles (or cosines of thereof) and one radial variable, corresponding to magnitude of the incoming $\mathbf{p}_2$ momentum.
 
 [WIP: the defaults and other details here are subject to change, and may be moved to dedicated API documentation]
 

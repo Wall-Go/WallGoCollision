@@ -1,8 +1,12 @@
 name: WallGoCollision build and Python tests
 
+permissions:
+  pull-requests: read
+
 on:
   pull_request:
     branches: [ main ]
+    types: [review_requested, ready_for_review]
 
 jobs:
   build:

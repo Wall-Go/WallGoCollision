@@ -1,0 +1,4 @@
+myst_parser
+sphinx
+sphinx-rtd-theme
+sphinxcontrib-bibtex
