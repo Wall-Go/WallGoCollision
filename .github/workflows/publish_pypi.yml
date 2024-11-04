@@ -38,6 +38,8 @@ jobs:
       with:
         workflow: wheels.yml
         branch: main
+        # empty name => download all artifacts
+        name:
         # Must put everything to dist/ for the pypa publish action to work 
         path: dist
         search_artifacts: true
