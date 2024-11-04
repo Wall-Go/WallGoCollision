@@ -29,6 +29,11 @@ jobs:
     needs: make_sdist
     name: Publish to TestPyPI
     runs-on: ubuntu-latest
+
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/WallGoCollision
+
     permissions:
       id-token: write
 
@@ -47,11 +52,10 @@ jobs:
         # Must put everything to dist/ for the pypa publish action to work 
         path: dist
         workflow_conclusion: success
-        #search_artifacts: true
         allow_forks: false
       
     - name: Publish to TestPyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
+        verbose: true
         repository-url: https://test.pypi.org/legacy/
-
