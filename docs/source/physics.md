@@ -1,6 +1,6 @@
 # Physics background
 
-Here, we give a brief overview on the physics background of the WallGo Collision package. For a more detailed discussion see [arXiv:2410.00000](https://arxiv.org/abs/2410.00000).
+Here, we give a brief overview on the physics background of the WallGo Collision package. For a more detailed discussion see The WallGo article on arXiv (TODO: insert URL once available).
 
 The WallGo Collision package computes the collision matrix, $\mathcal C^{\text{lin}}_{ab}$, in the linearized collision term of a Boltzmann equation:
 
