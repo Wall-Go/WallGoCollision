@@ -21,9 +21,9 @@ jobs:
           # cibuildwheel takes care of building for all supported Python versions as stated in pyproject.toml
           os: [
               ubuntu-latest,
-              windows-latest,
+              #windows-latest,
               #macos-13,
-              macos-14
+              #macos-14
             ]
 
     steps:
