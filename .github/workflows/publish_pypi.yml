@@ -4,16 +4,12 @@
 name: Publish to PyPI
 
 on:
-  # Run after the Build Wheels workflow
-  workflow_run:
-    workflows: [Build Wheels]
-    types: [completed]
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
-  
+
+  # Source distribution
   make_sdist:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Make SDist
     runs-on: ubuntu-latest
     steps:
@@ -30,27 +26,22 @@ jobs:
         path: dist/*.tar.gz
 
   publish_to_TestPyPI:
-    needs: [make_sdist]
-
-    # The 'success' check for triggering workflow may be redundant since we depend on make_sdist, but keep it just in case
-    #if: github.event_name == 'release' && github.event.action == 'published' && ${{ github.event.workflow_run.conclusion == 'success' }}
-    # TEMP for testing
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-
+    needs: make_sdist
     name: Publish to TestPyPI
     runs-on: ubuntu-latest
     permissions:
       id-token: write
 
     steps:
-    - name: Download built wheels from the triggering workflow
+    - name: Download built wheels
       uses: dawidd6/action-download-artifact@v6
       with:
-        run_id: ${{ github.event.workflow_run.id }}
-        pattern: cibw-*
+        workflow: wheels.yml
+        branch: main
         # Must put everything to dist/ for the pypa publish action to work 
         path: dist
         search_artifacts: true
+        allow_forks: false
 
     - name: Publish to TestPyPI
       uses: pypa/gh-action-pypi-publish@release/v1
