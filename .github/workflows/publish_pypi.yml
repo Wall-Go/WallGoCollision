@@ -6,6 +6,10 @@ name: Publish to PyPI
 on:
   workflow_dispatch:
 
+permissions:
+  pull-requests: read
+  actions: read
+
 jobs:
 
   # Source distribution
