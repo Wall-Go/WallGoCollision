@@ -8,7 +8,8 @@ on:
   workflow_run:  # This only works if the workflow is on the default branch
     workflows: [Build Wheels]
     types: [completed]
-    branches: [BuildWheels, main]
+    #branches: [BuildWheels, main]
+    branches: [main]
 
 jobs:
   build-sdist:

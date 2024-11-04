@@ -1,10 +1,10 @@
 name: Build Wheels
 
 on:
-  push:
-    branches:
-      # temp
-      - BuildWheels
+  workflow_dispatch:
+  release:
+    types:
+      - published
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -67,5 +67,5 @@ jobs:
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
-          path: ./wheelhouse/*.whl
+          name: cibw-wheels-${{ matrix.os }}
+          path: wheelhouse/*.whl
