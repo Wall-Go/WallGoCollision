@@ -2,8 +2,6 @@
 
 Collision integrations in **WallGoCollision** are performed using the Vegas Monte Carlo algorithm{footcite}`Lepage:1977sw` which is an adaptive probabilistic integrator. We use the [GSL implementation](https://www.gnu.org/software/gsl/doc/html/montecarlo.html#vegas) of the algorithm. **WallGoCollision** applies it to 5-dimensional integrals of form described in the [physics documentation](./physics.md). The set of integration variables consists of four angles (or cosines of thereof) and one radial variable, corresponding to magnitude of the incoming $\mathbf{p}_2$ momentum.
 
-[WIP: the defaults and other details here are subject to change, and may be moved to dedicated API documentation]
-
 The `IntegrationOptions` class collects parameters that can be adjusted for granular control over the integrator:
 - `maxIntegrationMomentum` specifies the upper bound on the radial integration variable. Must be given in units of the temperature. A value of order 10 is often sufficient because of Boltzmann suppression at high momenta. Default is 20.
 
