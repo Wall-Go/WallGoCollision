@@ -36,17 +36,17 @@ jobs:
       # Install Conan here already because we want to cache/restore its installed dependencies.
       # TODO: Caching requires more work on linux wheels since those happen inside Docker environment
       - name: Install Conan
-        if: matrix.os != 'ubuntu-latest'
+        if: runner.os != 'ubuntu-latest'
         run: pip install conan==2.8.1
 
       - name: Get Conan cache path
-        if: matrix.os != 'ubuntu-latest'
+        if: runner.os != 'ubuntu-latest'
         id: conan-cache-path
         shell: bash
         run: echo "conan_cache=$(conan config home)" >> $GITHUB_OUTPUT
 
       - name: Cache Conan dependencies
-        if: matrix.os != 'ubuntu-latest'
+        if: runner.os != 'ubuntu-latest'
         id: cache-conan
         uses: actions/cache@v4
         env:
@@ -58,8 +58,8 @@ jobs:
             ${{ runner.os }}-${{ env.cache-name }}-
 
       # Create new Conan profile only if we didn't hit cache
-      - if: matrix.os != 'ubuntu-latest' && ${{ steps.cache-conan.outputs.cache-hit != 'true' }}
-        name: Create default Conan profile if no cache was hit
+      - name: Create default Conan profile if no cache was hit
+        if: runner.os != 'ubuntu-latest' && ${{ steps.cache-conan.outputs.cache-hit != 'true' }}
         run: conan profile detect --exist-ok
       
       - name: Build and test wheels (cibuildwheel)
