@@ -1,0 +1,70 @@
+name: Build Wheels
+
+on:
+  # Workflow can only be ran manually through the GUI
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_wheels:
+    name: Build wheels for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      # If true, Github will cancel all other jobs in the matrix if any of them fails
+      fail-fast: false
+      matrix:
+          # macos-13 is x86_64, macos-14 is arm64.
+          # cibuildwheel takes care of building for all supported Python versions as stated in pyproject.toml
+          os: [
+              ubuntu-latest,
+              windows-latest,
+              #macos-13,
+              macos-14
+            ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # Fetch everything to ensure we get tags
+          fetch-depth: 0
+      
+      # Install Conan here already because we want to cache/restore its installed dependencies.
+      # TODO: Caching requires more work on linux wheels since those happen inside Docker environment
+      - name: Install Conan
+        run: pip install conan==2.8.1
+
+      - name: Get Conan cache path
+        id: conan-cache-path
+        shell: bash
+        run: echo "conan_cache=$(conan config home)" >> $GITHUB_OUTPUT
+
+      - name: Cache Conan dependencies
+        id: cache-conan
+        uses: actions/cache@v4
+        env:
+          cache-name: conan2-cache
+        with:
+          path: ${{ steps.conan-cache-path.outputs.conan_cache }}
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/conanfile.py') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.cache-name }}-
+
+      # Create new Conan profile only if we didn't hit cache
+      - if: ${{ steps.cache-conan.outputs.cache-hit != 'true' }}
+        name: Create default Conan profile if no cache was hit
+        run: conan profile detect --exist-ok
+      
+      - name: Build and test wheels (cibuildwheel)
+        uses: pypa/cibuildwheel@v2.21.3
+
+      - name: Upload wheels
+        uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-${{ matrix.os }}
+          path: wheelhouse/*.whl
+          

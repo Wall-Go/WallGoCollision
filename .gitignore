@@ -58,6 +58,7 @@ __pycache__/
 develop-eggs/
 dist/
 wheels/
+wheelhouse/
 *.egg
 *.egg-info/
 docs/_build

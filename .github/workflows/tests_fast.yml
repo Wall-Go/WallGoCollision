@@ -18,25 +18,17 @@ jobs:
       fail-fast: false
 
       matrix:
-#        os: [ubuntu-latest, macos-latest]
         os: [ubuntu-latest]
         build_type: [Release]
         c_compiler: [gcc, clang]
-        python-version: ["3.11"]
-        # Permutations commented until we release
-        #python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.12"]
         include:
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
-#          - os: macos-latest
-#            c_compiler: clang
-#            cpp_compiler: clang++
         exclude:
           - os: ubuntu-latest
             c_compiler: clang
-#          - os: macos-latest
-#            c_compiler: gcc
 
     steps:
       - uses: actions/checkout@v4
@@ -52,9 +44,6 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-
-#      - name: Install WallGo Python package
-#        run: pip install .[collisions,tests]
 
       - name: Install os-dependent Collision requirements
         run: |
