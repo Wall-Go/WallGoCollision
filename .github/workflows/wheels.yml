@@ -17,16 +17,20 @@ jobs:
       # If true, Github will cancel all other jobs in the matrix if any of them fails
       fail-fast: false
       matrix:
-          # macos-13 is x86_64, macos-14 is arm64.
           # cibuildwheel takes care of building for all supported Python versions as stated in pyproject.toml
           os: [
               ubuntu-latest,
-              #windows-latest,
-              #macos-13,
-              #macos-14
+              windows-latest,
+              macos-13-x64,
+              macos-14 # arm64
             ]
 
     steps:
+
+      - if: contains(matrix.os, 'macos-13-x64')
+        run: |
+          echo "CIBW_ARCHS_MACOS=x86_64" >> $GITHUB_ENV
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
@@ -36,17 +40,14 @@ jobs:
       # Install Conan here already because we want to cache/restore its installed dependencies.
       # TODO: Caching requires more work on linux wheels since those happen inside Docker environment
       - name: Install Conan
-        if: ${{ runner.os != 'ubuntu-latest' }}
         run: pip install conan==2.8.1
 
       - name: Get Conan cache path
-        if: ${{ runner.os != 'ubuntu-latest' }}
         id: conan-cache-path
         shell: bash
         run: echo "conan_cache=$(conan config home)" >> $GITHUB_OUTPUT
 
       - name: Cache Conan dependencies
-        if: ${{ runner.os != 'ubuntu-latest' }}
         id: cache-conan
         uses: actions/cache@v4
         env:
@@ -59,7 +60,7 @@ jobs:
 
       # Create new Conan profile only if we didn't hit cache
       - name: Create default Conan profile if no cache was hit
-        if: ${{ runner.os != 'ubuntu-latest' }} && ${{ steps.cache-conan.outputs.cache-hit != 'true' }}
+        if: ${{ steps.cache-conan.outputs.cache-hit != 'true' }}
         run: conan profile detect --exist-ok
       
       - name: Build and test wheels (cibuildwheel)
