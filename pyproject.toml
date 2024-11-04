@@ -30,8 +30,11 @@ sdist.include = [
     "python/packagedata/WallGoCollision/_version.py",
 ]
 sdist.exclude = [
+    ".gitattributes",
+    ".gitignore",
     ".github",
     "docs",
+    ".readthedocs.yml",
     "old"
 ]
 #
