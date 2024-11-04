@@ -19,15 +19,15 @@ jobs:
       matrix:
           # cibuildwheel takes care of building for all supported Python versions as stated in pyproject.toml
           os: [
-              ubuntu-latest,
-              windows-latest,
+              #ubuntu-latest,
+              #windows-latest,
               macos-13-x64,
-              macos-14 # arm64
+              #macos-14 # arm64
             ]
 
     steps:
 
-      - if: contains(matrix.os, 'macos-13-x64')
+      - if: ${{ runner.os == 'macos-13-x64' }}
         run: |
           echo "CIBW_ARCHS_MACOS=x86_64" >> $GITHUB_ENV
 
