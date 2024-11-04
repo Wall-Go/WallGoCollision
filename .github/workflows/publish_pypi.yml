@@ -1,4 +1,5 @@
 # This workflow makes a source distribution, downloads wheels built in the Build Wheels workflow and uploads to PyPI
+# Wheels will be downloaded from the most recent, successful run of the 'wheels.yml' workflow, on main branch.
 
 name: Publish to PyPI
 
@@ -53,12 +54,6 @@ jobs:
         workflow_conclusion: success
         allow_forks: false
 
-    # temp!
-    - name: "TEMP: upload full dist folder"
-      uses: actions/upload-artifact@v4
-      with:
-        path: dist/
-      
     - name: Publish to TestPyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
