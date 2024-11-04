@@ -9,24 +9,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Source distribution
-  make_sdist:
-    name: Make SDist
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        
-    - name: Build SDist
-      run: pipx run build --sdist
-
-    - uses: actions/upload-artifact@v4
-      with:
-        name: cibw-sdist
-        path: dist/*.tar.gz
-    
-  # Binary wheels
   build_wheels:
     name: Build wheels for ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -85,27 +67,4 @@ jobs:
         with:
           name: cibw-wheels-${{ matrix.os }}
           path: wheelhouse/*.whl
-      
-  # Publish to TestPyPI if sdist and wheels were both OK,
-  # and only on releases 
-  publish_to_TestPyPI:
-    needs: [make_sdist, build_wheels]
-    name: Publish to TestPyPI
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-    if: github.event_name == 'release' && github.event.action == 'published'
-
-    steps:
-    - uses: actions/download-artifact@v4
-      with:
-        pattern: cibw-*
-        # Must put everything to dist/ for the pypa publish action to work 
-        path: dist
-        merge-multiple: true
-
-    - name: Publish to TestPyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        repository-url: https://test.pypi.org/legacy/
-
+          
