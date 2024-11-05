@@ -1,19 +1,24 @@
-# This workflow makes a source distribution, downloads wheels built in the Build Wheels workflow and uploads to PyPI.
-# Does nothing if the wheel builder failed
+# This workflow makes a source distribution, downloads wheels built in the Build Wheels workflow and uploads to PyPI
+# Wheels will be downloaded from the most recent, successful run of the 'wheels.yml' workflow, on 'main' branch.
 
 name: Publish to PyPI
 
 on:
-  # Run after the Build Wheels workflow
-  workflow_run:
-    workflows: [Build Wheels]
-    types: [completed]
-    branches: [main]
+  workflow_dispatch:
+    inputs:
+      pypi_target:
+        type: choice
+        description: Select publishing target (PyPI or TestPyPI)
+        required: true
+        default: testpypi
+        options:
+        - pypi
+        - testpypi
 
 jobs:
-  
+
+  # Source distribution
   make_sdist:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Make SDist
     runs-on: ubuntu-latest
     steps:
@@ -30,30 +35,52 @@ jobs:
         path: dist/*.tar.gz
 
   publish_to_TestPyPI:
-    needs: [make_sdist]
-
-    # The 'success' check for triggering workflow may be redundant since we depend on make_sdist, but keep it just in case
-    #if: github.event_name == 'release' && github.event.action == 'published' && ${{ github.event.workflow_run.conclusion == 'success' }}
-    # TEMP for testing
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-
+    needs: make_sdist
     name: Publish to TestPyPI
     runs-on: ubuntu-latest
+
+    # Use same environment for both pypi/testpypi uploads
+    environment:
+      name: pypi
+
     permissions:
       id-token: write
 
     steps:
-    - name: Download built wheels from the triggering workflow
+    - name: Download SDist
+      uses: actions/download-artifact@v4
+      with:
+        name: cibw-sdist
+        path: dist
+
+    - name: Download built wheels
       uses: dawidd6/action-download-artifact@v6
       with:
-        run_id: ${{ github.event.workflow_run.id }}
-        pattern: cibw-*
+        workflow: .github/workflows/wheels.yml
+        branch: main
         # Must put everything to dist/ for the pypa publish action to work 
         path: dist
-        search_artifacts: true
+        workflow_conclusion: success
+        allow_forks: false
+
+    - name: Move wheels
+      # *.whl must be in dist/ directly
+      run: |
+        cd dist
+        ls -l
+        mv cibw-wheels-*/*.whl .
+        rmdir cibw-wheels-*
+        cd ..
 
     - name: Publish to TestPyPI
+      if: ${{ inputs.pypi_target == 'testpypi' }}
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
+        verbose: true
         repository-url: https://test.pypi.org/legacy/
 
+    - name: Publish to PyPI
+      if: ${{ inputs.pypi_target == 'pypi' }}
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        verbose: true
