@@ -59,7 +59,7 @@ jobs:
       run: |
         cd dist
         ls -l
-        mv cibw_wheels-*/*.whl
+        mv cibw_wheels-*/*.whl .
         rmdir cibw_wheels-*
         cd ..
 
