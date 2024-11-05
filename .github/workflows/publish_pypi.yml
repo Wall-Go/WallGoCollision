@@ -4,12 +4,17 @@
 name: Publish to PyPI
 
 on:
-  workflow_dispatch:
+  # Run after the Build Wheels workflow
+  workflow_run:
+    workflows: [Build Wheels]
+    types: [completed]
+    branches: [main]
 
 jobs:
 
   # Source distribution
   make_sdist:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Make SDist
     runs-on: ubuntu-latest
     steps:
@@ -68,3 +73,22 @@ jobs:
       with:
         verbose: true
         repository-url: https://test.pypi.org/legacy/
+
+  publish_to_PyPI:
+    needs: [make_sdist, publish_to_TestPyPI]
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+
+    environment:
+      name: pypi
+      url: https://pypi.org/p/WallGoCollision
+
+    permissions:
+      id-token: write
+
+    steps:
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        verbose: true
+        

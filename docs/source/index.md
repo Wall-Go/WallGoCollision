@@ -20,10 +20,6 @@ license.md
 
 [**WallGoCollision**](https://github.com/Wall-Go/WallGoCollision) is a scientific library for computing Boltzmann collision integrals for use with the Python package [**WallGo**](https://wallgo.readthedocs.io). The library is written in C++17 and can be compiled as a Python module for seamless interoperation with WallGo. Collision integrations are typically by far the most computationally intensive part of the **WallGo** wall velocity pipeline. **WallGoCollision** performs these integrations using native C++, allowing for performance optimizations that would not be possible in a pure Python package.
 
-:::{important}
-[**WallGoCollision**](https://github.com/Wall-Go/WallGoCollision) is still in beta and may undergo large changes without notice. Use with care.
-:::
-
 ## What it does
 
 The purpose of **WallGoCollision** is to compute integrals of form
@@ -41,5 +37,7 @@ can be computed automatically using the [WallGoMatrix](https://github.com/Wall-G
 ## Current limitations
 
 - Only 2-to-2 collision processes are supported.
+
+-  All momentum dependence in the matrix elements must be expressed in terms of the Mandelstam variables $s,t$ and $u$.
 
 - All physics parameters that appear in the matrix elements must be constant, floating point valued numbers. Dimensionful parameters must be given in units of the temperature (ie. **WallGoCollision** works in units of $T=1$). The limitation here is that parameters that vary along the momentum/position grid are not supported. 
