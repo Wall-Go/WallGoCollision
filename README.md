@@ -2,71 +2,25 @@
 
 # WallGoCollision
 
-Home: https://wallgocollision.readthedocs.io
+Scientific library for computing Boltzmann collision integrals, written in C++ with Python bindings provided. **WallGoCollision** is part of the [**WallGo**](https://github.com/Wall-Go/WallGo) toolset for the computation of the bubble wall velocity and bubble wall width in first-order cosmological phase transitions.
 
-License: [GPL3](LICENSE)
+Documentation for **WallGoCollision**: https://wallgocollision.readthedocs.io.
 
-Summary: Collision integration for Boltzmann equations in WallGo.
+## Requirements
 
-Development: https://github.com/Wall-Go/WallGoCollision
-
-
-## Status
-
-[![Version](https://img.shields.io/github/v/tag/Wall-Go/WallGoCollision?label=Version)](https://github.com/Wall-Go/WallGoCollision/tags/)
-
-[![WallGoCollision tests (main)](https://github.com/Wall-Go/WallGoCollision/actions/workflows/main.yml/badge.svg)](https://github.com/Wall-Go/WallGoCollision/actions/workflows/buildAndTest.yml)
-
-
-## About this project
-
-[**WallGo**](https://wallgo.readthedocs.io) is an open source code for the computation of the bubble wall velocity and bubble wall width in first-order cosmological phase transitions.
-The main WallGo Python package determines the wall velocity and width by solving the scalar field(s) equation of motion, the Boltzmann equations and energy-momentum conservation for the fluid velocity and temperature.
-
-The [**WallGo**](https://github.com/Wall-Go/WallGo) package is accompanied by two subsidiary software packages:
-- [**WallGoCollision**](https://github.com/Wall-Go/WallGoCollision) performs the higher-dimensional integrals to obtain the collision terms in the Boltzmann equations, and is written in C++. It also has Python bindings so that it can be called directly from Python, but still benefits from the speedup from compiled C++ code.
-- [**WallGoMatrix**](https://github.com/Wall-Go/WallGoMatrix) computes the relevant matrix elements for the out-of-equilibrium particles, and is written in Mathematica. It builds on existing Mathematica packages [DRalgo](https://github.com/DR-algo/DRalgo) and [GroupMath](https://renatofonseca.net/groupmath).
-
+Python 3.10 or newer is required for the Python bindings. If building from source, you need a C++17 compliant compiler and CMake 3.18 or newer. See the [documentation](https://wallgocollision.readthedocs.io/en/latest/install.html) for more details on source builds.
 
 ## Installation
 
-WallGoCollision can be installed with pip, using:
+Stable releases of the Python bindings can be found on the [releases](https://github.com/Wall-Go/WallGoCollision/releases) page. These are also available on PyPI and can be installed with pip:
 
     pip install WallGoCollision
 
-If you have an existing installation, add the flag `--upgrade` to install the latest (stable) release.
-
-Alternatively, to build the latest (unstable) development version from the repository, run:
-
-    git clone git@github.com:Wall-Go/WallGoCollision.git
-    cd WallGoCollision
-    pip install -e .
-
-
-### Requirements
-
-WallGoCollision requires Python 3.10 or above.
-
+For source builds, see the [documentation](https://wallgocollision.readthedocs.io/en/latest/install.html).
 
 ## Quick start
 
-A first example model is explained in the
-[WallGoCollision documentation](https://wallgocollision.readthedocs.io/en/latest/quickstart).
-
-
-### Examples
-
-A number of example models are collected in the WallGo repository in the folder
-[Models](https://github.com/Wall-Go/WallGo/tree/main/Models), including the following:
-
-- Standard Model with light Higgs
-- Inert Doublet Model
-- Real singlet scalar extension of the Standard Model
-- Many scalar extension of the Standard Model
-- Yukawa model
-
-These examples demonstrate usage of WallGo and WallGoCollision, and can be run directly with Python.
-
+See the [documentation](https://wallgocollision.readthedocs.io/en/latest/quickstart) for a good starting example. Examples of concrete physics models are available on the [**WallGo** repository](https://github.com/Wall-Go/WallGo/tree/main/Models).
 
 ## Feedback and further questions
 
