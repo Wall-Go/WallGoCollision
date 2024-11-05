@@ -18,9 +18,9 @@ Stable releases of the Python bindings can be found on the [releases](https://gi
 
 For source builds, see the [documentation](https://wallgocollision.readthedocs.io/en/latest/install.html).
 
-## Quick start
+## Quickstart
 
-See the [documentation](https://wallgocollision.readthedocs.io/en/latest/quickstart) for a good starting example. Examples of concrete physics models are available on the [**WallGo** repository](https://github.com/Wall-Go/WallGo/tree/main/Models).
+The [quickstart page in documentation](https://wallgocollision.readthedocs.io/en/latest/quickstart.html) should get you started. Examples of concrete physics models are available on the [**WallGo** repository](https://github.com/Wall-Go/WallGo/tree/main/Models).
 
 ## Feedback and further questions
 
