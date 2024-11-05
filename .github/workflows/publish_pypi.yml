@@ -1,7 +1,7 @@
 # This workflow makes a source distribution, downloads wheels built in the Build Wheels workflow and uploads to PyPI
 # Wheels will be downloaded from the most recent, successful run of the 'wheels.yml' workflow, on 'main' branch.
 
-name: Publish to PyPI
+name: Publish WallGoCollision on PyPI
 
 on:
   workflow_dispatch:
@@ -34,9 +34,8 @@ jobs:
         name: cibw-sdist
         path: dist/*.tar.gz
 
-  publish_to_TestPyPI:
+  publish_to_PyPI:
     needs: make_sdist
-    name: Publish to TestPyPI
     runs-on: ubuntu-latest
 
     # Use same environment for both pypi/testpypi uploads
