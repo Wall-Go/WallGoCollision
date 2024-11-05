@@ -54,6 +54,10 @@ jobs:
         workflow_conclusion: success
         allow_forks: false
 
+    - name: Show contents of dist
+      # For debugging purposes
+      run: ls -l dist
+
     - name: Publish to TestPyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
