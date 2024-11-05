@@ -1,6 +1,6 @@
 # Installation
 
-WallGoCollision can be installed with pip, using:
+WallGoCollision can be installed from the PyPI repository with pip, using:
 
     pip install WallGoCollision
 
@@ -10,7 +10,7 @@ Alternatively, below we give details on how to build the latest (unstable) devel
 
 ### Installing the Python extension module only (with pip)
 
-After cloning the [WallGoCollision repository](https://github.com/Wall-Go/WallGoCollision), run
+After cloning the [WallGoCollision repository](https://github.com/Wall-Go/WallGoCollision), the package can be built and installed with pip by running
 ```
 pip install . -v
 ```
