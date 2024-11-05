@@ -59,8 +59,8 @@ jobs:
       run: |
         cd dist
         ls -l
-        mv cibw_wheels-*/*.whl .
-        rmdir cibw_wheels-*
+        mv cibw-wheels-*/*.whl .
+        rmdir cibw-wheels-*
         cd ..
 
     - name: Publish to TestPyPI
