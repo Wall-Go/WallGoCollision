@@ -33,7 +33,6 @@ sdist.exclude = [
     ".gitattributes",
     ".gitignore",
     ".github",
-    "docs",
     ".readthedocs.yml",
     "old"
 ]

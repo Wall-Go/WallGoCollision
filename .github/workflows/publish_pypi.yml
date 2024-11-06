@@ -1,20 +1,28 @@
 # This workflow makes a source distribution, downloads wheels built in the Build Wheels workflow and uploads to PyPI
+<<<<<<< HEAD
 # Wheels will be downloaded from the most recent, successful run of the 'wheels.yml' workflow, on main branch.
+=======
+# Wheels will be downloaded from the most recent, successful run of the 'wheels.yml' workflow, on 'main' branch.
+>>>>>>> origin/main
 
-name: Publish to PyPI
+name: Publish WallGoCollision on PyPI
 
 on:
-  # Run after the Build Wheels workflow
-  workflow_run:
-    workflows: [Build Wheels]
-    types: [completed]
-    branches: [main]
+  workflow_dispatch:
+    inputs:
+      pypi_target:
+        type: choice
+        description: Select publishing target (PyPI or TestPyPI)
+        required: true
+        default: testpypi
+        options:
+        - pypi
+        - testpypi
 
 jobs:
 
   # Source distribution
   make_sdist:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Make SDist
     runs-on: ubuntu-latest
     steps:
@@ -30,6 +38,7 @@ jobs:
         name: cibw-sdist
         path: dist/*.tar.gz
 
+<<<<<<< HEAD
   publish_to_TestPyPI:
     needs: make_sdist
     name: Publish to TestPyPI
@@ -38,6 +47,15 @@ jobs:
     environment:
       name: testpypi
       url: https://test.pypi.org/p/WallGoCollision
+=======
+  publish_to_PyPI:
+    needs: make_sdist
+    runs-on: ubuntu-latest
+
+    # Use same environment for both pypi/testpypi uploads
+    environment:
+      name: pypi
+>>>>>>> origin/main
 
     permissions:
       id-token: write
@@ -59,8 +77,13 @@ jobs:
         workflow_conclusion: success
         allow_forks: false
 
+<<<<<<< HEAD
     - name: Unpack build wheels
       # Need to be all on one level
+=======
+    - name: Move wheels
+      # *.whl must be in dist/ directly
+>>>>>>> origin/main
       run: |
         cd dist
         ls -l
@@ -69,11 +92,13 @@ jobs:
         cd ..
 
     - name: Publish to TestPyPI
+      if: ${{ inputs.pypi_target == 'testpypi' }}
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         verbose: true
         repository-url: https://test.pypi.org/legacy/
 
+<<<<<<< HEAD
   publish_to_PyPI:
     needs: [make_sdist, publish_to_TestPyPI]
     name: Publish to PyPI
@@ -92,3 +117,10 @@ jobs:
       with:
         verbose: true
         
+=======
+    - name: Publish to PyPI
+      if: ${{ inputs.pypi_target == 'pypi' }}
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        verbose: true
+>>>>>>> origin/main
