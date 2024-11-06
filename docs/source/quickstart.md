@@ -18,7 +18,7 @@ modelDef = WallGoCollision.ModelDefinition()
 gs = 1.228 # Corresponds to the QCD coupling
 modelDef.defineParameter("gs", gs) 
 ```
-Parameters must be given as (name, value) pairs. The value must be floating-point type or convertible to such, eg. complex numbers are not allowed. In the above, "gs" is the parameter name, and any appearance of "gs" in the symbolic matrix elements will be replaced with the numeric value during collision integration.
+Parameters must be given as (name, value) pairs. The value must be floating-point type or convertible to such, e.g. complex numbers are not allowed. In the above, "gs" is the parameter name, and any appearance of "gs" in the symbolic matrix elements will be replaced with the numeric value during collision integration.
 
 Next we define our particle content using the ParticleDefinition class. Each particle species must have a unique name (string) as well as a unique integer identifier ("particle index"). The index is used to associate loaded matrix elements with the correct particles. Additionally, you must specify the particle statistics type (boson or fermion), and whether the species is assumed to remain in thermal equilibrium. The latter can be used to reduce the number of collision integrations for models containing particle species for which deviations from equilibrium are negligible. Here we define a "Top Quark" and a "Gluon" as out-of-equilibrium particles, and a generic "Light Quark" that is kept in equilibrium.
 ```
@@ -44,15 +44,15 @@ lightQuark.type = WallGoCollision.EParticleType.eFermion
 lightQuark.bInEquilibrium = True
 modelDef.defineParticleSpecies(lightQuark)
 ```
-The above particle species are all defined as "ultrarelativistic" (the default behavior). In **WallGoCollision**, an ultrarelativistic particle species $a$ means that its energy-momentum dispersion relation is approximated as $E_a \approx |p_a|$ in collision integrals. This allows for heavy optimizations and should be preferred whenever the approximation makes sense for your particles. For going beyond the ultrarelativistic approximation, see [here (TODO! empty link for now)]().
+The above particle species are all defined as "ultrarelativistic" (the default behavior). In **WallGoCollision**, an ultrarelativistic particle species $a$ means that its energy-momentum dispersion relation is approximated as $E_a \approx |p_a|$ in collision integrals. This is sufficient at leading-logarithmic order. It also allows for heavy optimizations and should be preferred whenever the approximation makes sense for your particles. For going beyond the ultrarelativistic approximation, see [here (TODO! empty link for now)]().
 
-Finally, we should define numerical values for masses that appear in propagators of matrix elements. In **WallGoCollision**, these masses are treated as model parameters analogous to the "gs" parameter defined above, ie. a propagator mass is just another user-defined symbol that can appear in matrix elements and must be given a numberical value. In the matrix elements for this example, the mass-square of a quark propagator is denoted by "mq2" and the mass-square of a gluon propagator is "mg2". For this model we approximate them as their asymptotic QCD thermal masses (same for all quark species):
+Finally, we should define numerical values for masses that appear in propagators of matrix elements. In **WallGoCollision**, these masses are treated as model parameters analogous to the "gs" parameter defined above, i.e. a propagator mass is just another user-defined symbol that can appear in matrix elements and must be given a numberical value. In the matrix elements for this example, the mass-square of a quark propagator is denoted by "mq2" and the mass-square of a gluon propagator is "mg2". For this model we approximate them as their asymptotic QCD thermal masses (same for all quark species):
 ```
 modelDef.defineParameter("mq2", gs**2 / 3.0)
 modelDef.defineParameter("mg2", gs**2)
 ```
 :::{note}
-Any dimensionful parameters must be given in units of the temperature. Therefore the above corresponds to eg. $\frac13 g_s^2 T^2$ for the quark mass-square.
+Any dimensionful parameters must be given in units of the temperature. Therefore the above corresponds to e.g. $\frac13 g_s^2 T^2$ for the quark mass-square.
 :::
 
 To finalize our model definition we create a concrete `PhysicsModel` based on the information in our `modelDef` object:
@@ -63,9 +63,9 @@ Once created, the particle and parameter content of a `PhysicsModel` is fixed an
 
 ## Loading matrix elements
 
-The next step is to specify what collision processes are allowed in the model. This is done by loading symbolic (ie. math expressions) matrix elements for the relevant processes from an external file. Finding matrix elements for a given particle physics model is an exercise in field theory and not within capabilities of **WallGoCollision**. The companion Mathematica package [**WallGoMatrix**](https://github.com/Wall-Go/WallGoMatrix) can be used to generate matrix elements for arbitrary models, directly in the format required to **WallGoCollision**.
+The next step is to specify what collision processes are allowed in the model. This is done by loading symbolic (i.e. math expressions) matrix elements for the relevant processes from an external file. Finding matrix elements for a given particle physics model is an exercise in field theory and not within the capabilities of **WallGoCollision**. The companion Mathematica package [**WallGoMatrix**](https://github.com/Wall-Go/WallGoMatrix) can be used to generate matrix elements for arbitrary models, directly in the format required to **WallGoCollision**.
 
-**WallGoCollision** supports matrix element parsing in JSON format (needs `.json` file extension) or from generic text files (legacy option). The JSON format is generally recommended for better validation; the `.json` matrix elements relevant for this example are available [here](https://github.com/Wall-Go/WallGoCollision/tree/main/examples/MatrixElements/MatrixElements_QCD.json). A legacy `.txt` version is available [here](https://github.com/Wall-Go/WallGoCollision/tree/main/examples/MatrixElements/MatrixElements_QCD.txt), note that the formatting must be exactly as shown in the file for parsing to work. Each matrix element must specify indices of external particles participating in the collision process, and a symbolic expression that is typically a function of Mandelstam variables (denoted by reserved symbols "_s", "_t", "_u") and of any user-specified symbols (such as "gs" in this example).
+**WallGoCollision** supports matrix element parsing in JSON format (needs `.json` file extension) or from generic text files (legacy option). The JSON format is generally recommended for better validation; the `.json` matrix elements relevant for this example are available [here](https://github.com/Wall-Go/WallGoCollision/tree/main/examples/MatrixElements/MatrixElements_QCD.json). A legacy `.txt` version is available [here](https://github.com/Wall-Go/WallGoCollision/tree/main/examples/MatrixElements/MatrixElements_QCD.txt), note that the formatting of the `.txt` file must be exactly as shown there for parsing to work. Each matrix element must specify indices of external particles participating in the collision process, and a symbolic expression that is typically a function of Mandelstam variables (denoted by reserved symbols "_s", "_t", "_u") and of any user-specified symbols (such as "gs" in this example).
 
 Matrix elements are loaded to a PhysicsModel as follows:
 ```
@@ -87,13 +87,13 @@ collisionTensor: WallGoCollision.CollisionTensor = collisionModel.createCollisio
 ```
 `gridSize` is the number of basis polynomials on your momentum/polynomial grid as used by the **WallGo** pipeline, and must be integer. It can be freely changed later with `collisionTensor.changePolynomialBasisSize(newSize)`.
 
-Before starting integrations it can be useful to configure the integrator to best suit your needs. A handful of settings is available in the `IntegrationOptions` class, including error tolerances for the Monte Carlo integration and the upper limit on momentum integration. You can then pass your modified `IntegrationOptions` object to `CollisionTensor` as `collisionTensor.setIntegrationOptions(yourOptionsObject)`. Here we skip this step and use the default settings. Similarly, the `CollisionTensorVerbosity` class can be used to configure verbosity settings, such as progress reporting and time estimates. Set it as `collisionTensor.setIntegrationVerbosity(yourVerbosityObject)`.
+Before starting integrations it can be useful to configure the integrator to best suit your needs. A handful of settings are available in the `IntegrationOptions` class, including error tolerances for the Monte Carlo integration and the upper limit on momentum integration. You can then pass your modified `IntegrationOptions` object to `CollisionTensor` as `collisionTensor.setIntegrationOptions(yourOptionsObject)`. Here we skip this step and use the default settings. Similarly, the `CollisionTensorVerbosity` class can be used to configure verbosity settings, such as progress reporting and time estimates. Set it as `collisionTensor.setIntegrationVerbosity(yourVerbosityObject)`.
 
 To perform the actual integrations, use
 ```
 results: WallGoCollision.CollisionTensorResult = collisionTensor.computeIntegralsAll()
 ```
-This is typically a very long running functions for nontrivial models and grid sizes. For grid size $N$ the number of required integrals scales as $(N-1)^4$. The return type CollisionTensorResult is a wrapper around 4D numerical array that contains statistical error estimates of the Monte Carlo integration.  Once finished, you can save the results in `.hdf5` format as follows:
+This is typically a very long running functions for nontrivial models and grid sizes. For grid size $N$ the number of required integrals scales as $(N-1)^4$. The return type CollisionTensorResult is a wrapper around a 4D numerical array that contains statistical error estimates of the Monte Carlo integration.  Once finished, you can save the results in `.hdf5` format as follows:
 ```
 # Replace with your output directory
 results.writeToIndividualHDF5("CollisionOutDir/")

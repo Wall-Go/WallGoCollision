@@ -19,7 +19,7 @@ $$
 \mathcal{C}_a[\delta f] = \frac{1}{4} \sum_{bcd} \int \frac{d^3\mathbf{p}_2 d^3\mathbf{p}_3 d^3\mathbf{p}_4}{(2\pi)^52E_2 2E_3 2E_4} \delta^4(p_1 + p_2 - p_3 - p_4) |M_{ab \rightarrow cd}(p_1, p_2; p_3, p_4)|^2 \mathcal{P}_{ab \rightarrow cd}[\delta f],
 $$
 
-where $M_{ab\to cd}$ is a 2-to-2 scattering matrix element, and $\mathcal{P}_{ab \rightarrow cd}[\delta f]$ is the linearised population factor. Further details can be found in the paper of Cline & Laurent {footcite}`Laurent:2022jrs`.
+where $M_{ab\to cd}$ is a 2-to-2 scattering matrix element, and $\mathcal{P}_{ab \rightarrow cd}[\delta f]$ is the linearised population factor. Further details can be found in the WallGo paper, or the paper of Cline & Laurent {footcite}`Laurent:2022jrs`.
 
 The linear form of the collision term corresponds to the assumption that the particle species are close to equilibrium, $\delta f^a \ll f_{\text{eq}}^a$. If the species were at equilibrium the collision term would be indentically zero due to the detailed balance. Hence, expanding the full collision term around equilibrium yields the linear term on the leading order in $\delta f$.
 
