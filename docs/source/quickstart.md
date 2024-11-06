@@ -44,7 +44,7 @@ lightQuark.type = WallGoCollision.EParticleType.eFermion
 lightQuark.bInEquilibrium = True
 modelDef.defineParticleSpecies(lightQuark)
 ```
-The above particle species are all defined as "ultrarelativistic" (the default behavior). In **WallGoCollision**, an ultrarelativistic particle species $a$ means that its energy-momentum dispersion relation is approximated as $E_a \approx |p_a|$ in collision integrals. This allows for heavy optimizations and should be preferred whenever the approximation makes sense for your particles. For going beyond the ultrarelativistic approximation, see [here (TODO! empty link for now)]().
+The above particle species are all defined as "ultrarelativistic" (the default behavior). In **WallGoCollision**, an ultrarelativistic particle species $a$ means that its energy-momentum dispersion relation is approximated as $E_a \approx |p_a|$ in collision integrals. This is sufficient at leading-logarithmic order. It also allows for heavy optimizations and should be preferred whenever the approximation makes sense for your particles. For going beyond the ultrarelativistic approximation, see [here (TODO! empty link for now)]().
 
 Finally, we should define numerical values for masses that appear in propagators of matrix elements. In **WallGoCollision**, these masses are treated as model parameters analogous to the "gs" parameter defined above, i.e. a propagator mass is just another user-defined symbol that can appear in matrix elements and must be given a numberical value. In the matrix elements for this example, the mass-square of a quark propagator is denoted by "mq2" and the mass-square of a gluon propagator is "mg2". For this model we approximate them as their asymptotic QCD thermal masses (same for all quark species):
 ```
