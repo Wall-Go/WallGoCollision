@@ -1,8 +1,8 @@
-<img src="docs/source/figures/wallgo.svg" alt="WallGoLogo" width="200"/>
+<img src="https://raw.githubusercontent.com/Wall-Go/WallGoCollision/refs/heads/main/docs/source/figures/wallgo.svg" alt="WallGoLogo" width="200"/>
 
 # WallGoCollision
 
-Scientific library for computing Boltzmann collision integrals, written in C++ with Python bindings provided. **WallGoCollision** is part of the [**WallGo**](https://github.com/Wall-Go/WallGo) toolset for the computation of the bubble wall velocity and bubble wall width in first-order cosmological phase transitions.
+Scientific library for computing Boltzmann collision integrals, written in C++ with Python bindings provided. **WallGoCollision** is part of the [**WallGo**](https://github.com/Wall-Go/WallGo) toolset for the computation of the bubble wall velocity and bubble wall width in first-order cosmological phase transitions. The physical and mathematical details are explained in [the associated paper](https://arxiv.org/abs/2411.04970).
 
 Documentation for **WallGoCollision**: https://wallgocollision.readthedocs.io.
 
