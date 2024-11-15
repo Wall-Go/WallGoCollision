@@ -12,11 +12,13 @@ Python 3.10 or newer is required for the Python bindings. If building from sourc
 
 ## Installation
 
-Stable releases of the Python bindings can be found on the [releases](https://github.com/Wall-Go/WallGoCollision/releases) page. These are also available on PyPI and can be installed with pip:
+Stable releases of the Python bindings are available on PyPI and can be installed with pip:
 
     pip install WallGoCollision
 
-For source builds, see the [documentation](https://wallgocollision.readthedocs.io/en/latest/install.html).
+See also the [releases page](https://github.com/Wall-Go/WallGoCollision/releases).
+
+A manual build and linking is needed if you wish to use the C++ API directly. For source builds, see the [documentation](https://wallgocollision.readthedocs.io/en/latest/install.html).
 
 ## Quickstart
 
