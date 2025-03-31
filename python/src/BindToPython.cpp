@@ -71,14 +71,14 @@ PYBIND11_MODULE(WG_PYTHON_MODULE_NAME, m)
             return bShouldExit;
         };
 
-    
+
     m.def("getVersionNumber", []() { return py::str(WG_VERSION); }, "Returns WallGoCollision version number.");
 
     // Bind GSL seed setter
     m.def("setSeed", &wallgo::setSeed, py::arg("seed"), "Set seed used by Monte Carlo integration. Default is 0.");
 
     // Will need to do static_casts to specific function signatures when binding overloaded functions,
-    // see https://pybind11.readthedocs.io/en/stable/classes.html#overloaded-methods 
+    // see https://pybind11.readthedocs.io/en/stable/classes.html#overloaded-methods
 
     py::class_<GridPoint>(m, "GridPoint",
         R"(Point (m, n; j, k) on polynomial/momentum grid.
@@ -155,7 +155,7 @@ PYBIND11_MODULE(WG_PYTHON_MODULE_NAME, m)
             Can be None if the pair is not found)",
             py::arg("particle1"), py::arg("particle2")
         );
-    
+
     py::class_<CollisionIntegral4>(m,
         "CollisionIntegral4",
         R"(Describes a collision integral for 2 -> 2 scattering process.
@@ -198,6 +198,11 @@ PYBIND11_MODULE(WG_PYTHON_MODULE_NAME, m)
             py::return_value_policy::reference_internal,
             R"(Get reference to specified CollisionIntegral4 object. Intended mainly for debugging purposes,
             eg. if you need the value of the integrand at a specific point for comparison with other codes.)"
+        ).def("computeIntegralsForPair",
+            static_cast<CollisionResultsGrid(CollisionTensor::*)(const std::string&, const std::string&)>(&CollisionTensor::computeIntegralsForPair),
+            py::call_guard<py::gil_scoped_release>(),
+            R"(Computes collision integrals for the specified particle pair only. Does not hold GIL.)",
+            py::arg("particle1"), py::arg("particle2")
         );
 
     py::class_<ModelParameters>(m, "ModelParameters", "Container for physics model-dependent parameters (couplings etc)")
