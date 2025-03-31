@@ -18,28 +18,16 @@
 #include "ModelObserver.h"
 
 
-/** How we manage particles. Calling addParticle(particle) registers a new particle with the CollisionTensor.
- * We take a copy of the particle struct and store them as unique pointers in our 'particles' list.
- * Each CollisionElement needs raw pointers to its external particles, so when new CollElems are created through the manager
- * we pass references to appropriate particles from our 'particles' list.
- */
-
-/** Handling of model parameters. The manager holds a map of [string, double] pairs that can be updated
- * through CollisionTensor::setVariable(key, val). These need to be defined before parsing matrix elements,
- * otherwise the parsing will error out due to undefined symbols. Each matrix element will hold their own internal map
- * of parameter values, so if they change at any point, it is up to the manager to sync all built CollisionIntegral objects
- * and their stored MatrixElement objects. 
- * 
- * TODO: Would it be better to pass the parameters to matrix elements as pointers too? 
-*/
-
 namespace wallgo
 {
 
 class PhysicsModel;
 
 
-/**/
+/* Class CollisionTensor -- Contains collision integrals in an unevaluated form
+and provides an interface for evaluating them.
+Uses an observer pattern to automatically detect changes in the PhysicsModel instance that created it.
+*/
 class CollisionTensor : public IModelObserver
 {
 
