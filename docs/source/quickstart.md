@@ -13,7 +13,7 @@ The following assumes you have the **WallGoCollision** Python module [installed]
 ## Defining the model
 
 Model definition is done by filling in a ModelDefinition helper object and passing it to the PhysicsModel constructor. Start by defining your model parameters:
-```
+```python
 modelDef = WallGoCollision.ModelDefinition()
 gs = 1.228 # Corresponds to the QCD coupling
 modelDef.defineParameter("gs", gs) 
@@ -21,7 +21,7 @@ modelDef.defineParameter("gs", gs)
 Parameters must be given as (name, value) pairs. The value must be floating-point type or convertible to such, e.g. complex numbers are not allowed. In the above, "gs" is the parameter name, and any appearance of "gs" in the symbolic matrix elements will be replaced with the numeric value during collision integration.
 
 Next we define our particle content using the ParticleDefinition class. Each particle species must have a unique name (string) as well as a unique integer identifier ("particle index"). The index is used to associate loaded matrix elements with the correct particles. Additionally, you must specify the particle statistics type (boson or fermion), and whether the species is assumed to remain in thermal equilibrium. The latter can be used to reduce the number of collision integrations for models containing particle species for which deviations from equilibrium are negligible. Here we define a "Top Quark" and a "Gluon" as out-of-equilibrium particles, and a generic "Light Quark" that is kept in equilibrium.
-```
+```python
 topQuark = WallGoCollision.ParticleDescription()
 topQuark.name = "Top"
 topQuark.index = 0
@@ -56,7 +56,7 @@ Any dimensionful parameters must be given in units of the temperature. Therefore
 :::
 
 To finalize our model definition we create a concrete `PhysicsModel` based on the information in our `modelDef` object:
-```
+```python
 collisionModel = WallGoCollision.PhysicsModel(modelDef)
 ```
 Once created, the particle and parameter content of a `PhysicsModel` is fixed and cannot be changed. You are still allowed to update values of existing parameters by calling `model.updateParameter(name, newValue)`. Runtime changes to a PhysicsModel will automatically propagate to `CollisionTensor` objects created from it.
@@ -68,7 +68,7 @@ The next step is to specify what collision processes are allowed in the model. T
 **WallGoCollision** supports matrix element parsing in JSON format (needs `.json` file extension) or from generic text files (legacy option). The JSON format is generally recommended for better validation; the `.json` matrix elements relevant for this example are available [here](https://github.com/Wall-Go/WallGoCollision/tree/main/examples/MatrixElements/MatrixElements_QCD.json). A legacy `.txt` version is available [here](https://github.com/Wall-Go/WallGoCollision/tree/main/examples/MatrixElements/MatrixElements_QCD.txt), note that the formatting of the `.txt` file must be exactly as shown there for parsing to work. Each matrix element must specify indices of external particles participating in the collision process, and a symbolic expression that is typically a function of Mandelstam variables (denoted by reserved symbols "_s", "_t", "_u") and of any user-specified symbols (such as "gs" in this example).
 
 Matrix elements are loaded to a PhysicsModel as follows:
-```
+```python
 # Replace with your own path. The second argument is optional and specifies whether the loaded matrix elements should be printed for logging purposes
 bSuccess: bool = collisionModel.loadMatrixElements("MatrixElements/MatrixElements_QCD.json", True)
 ```
@@ -79,7 +79,7 @@ This parses the file and finds matrix elements for particles that the model is a
 ## `CollisionTensor` creation and evaluation
 
 The `CollisionTensor` class contains collision integrals in an unevaluated but otherwise ready form. Once matrix elements have been loaded we can create a `CollisionTensor` object as follows:
-```
+```python
 # Modify according to your needs. Using a trivially small grid to make this example run fast
 gridSize = 5
 # Type hinting included for completeness
@@ -90,20 +90,20 @@ collisionTensor: WallGoCollision.CollisionTensor = collisionModel.createCollisio
 Before starting integrations it can be useful to configure the integrator to best suit your needs. A handful of settings are available in the `IntegrationOptions` class, including error tolerances for the Monte Carlo integration and the upper limit on momentum integration. You can then pass your modified `IntegrationOptions` object to `CollisionTensor` as `collisionTensor.setIntegrationOptions(yourOptionsObject)`. Here we skip this step and use the default settings. Similarly, the `CollisionTensorVerbosity` class can be used to configure verbosity settings, such as progress reporting and time estimates. Set it as `collisionTensor.setIntegrationVerbosity(yourVerbosityObject)`.
 
 To perform the actual integrations, use
-```
+```python
 results: WallGoCollision.CollisionTensorResult = collisionTensor.computeIntegralsAll()
 ```
 This is typically a very long running functions for nontrivial models and grid sizes. For grid size $N$ the number of required integrals scales as $(N-1)^4$. The return type CollisionTensorResult is a wrapper around a 4D numerical array that contains statistical error estimates of the Monte Carlo integration.  Once finished, you can save the results in `.hdf5` format as follows:
-```
+```python
 # Replace with your output directory
 results.writeToIndividualHDF5("CollisionOutDir/")
 ```
 This creates a separate `.hdf5` for each pair of out-of-equilibrium particles in the model in the specified output directory. The data can then be readily loaded into [**WallGo**](https://wallgo.readthedocs.io).
 
 It is also possible to calculate only parts of the collision tensor by fixing particle indices (see also the [docs on physics](physics.md)). For example, the part of $\mathcal C^{\text{lin}}_{ab}$ that mixes distributions of "top" and "gluon" particles in the Boltzmann equation of "top" can be computed as follows:
-```
+```python
 results_tg = collisionTensor.computeIntegralsForPair("top", "gluon")
 # Save as .hdf5
-results_tg.writeToHDF5("CollisionOutDir/collisions_top_gluon.hdf5", False)
+results_tg.writeToHDF5("CollisionOutDir/collisions_top_gluon.hdf5")
 ```
 This is useful for avoiding redundant computations when changing model parameters in a way that only affects some collision terms.
