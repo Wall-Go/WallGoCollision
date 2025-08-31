@@ -99,3 +99,11 @@ This is typically a very long running functions for nontrivial models and grid s
 results.writeToIndividualHDF5("CollisionOutDir/")
 ```
 This creates a separate `.hdf5` for each pair of out-of-equilibrium particles in the model in the specified output directory. The data can then be readily loaded into [**WallGo**](https://wallgo.readthedocs.io).
+
+It is also possible to calculate only parts of the collision tensor by fixing particle indices (see also the [docs on physics](physics.md)). For example, the part of $\mathcal C^{\text{lin}}_{ab}$ that mixes distributions of "top" and "gluon" particles in the Boltzmann equation of "top" can be computed as follows:
+```
+results_tg = collisionTensor.computeIntegralsForPair("top", "gluon")
+# Save as .hdf5
+results_tg.writeToHDF5("CollisionOutDir/collisions_top_gluon.hdf5", False)
+```
+This is useful for avoiding redundant computations when changing model parameters in a way that only affects some collision terms.
