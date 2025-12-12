@@ -12,8 +12,8 @@ class WallGoCollisionRecipe(ConanFile):
         self.requires("gsl/2.7.1")
         self.requires("hdf5/1.14.3")
         self.requires("pybind11/2.11.1")
-        self.requires("muparser/2.3.4")
-        
+        self.requires("muparser/2.3.5")
+
         """Require llvm-openmp recipe if env variable is set.
         This version of OMP doesn't seem to work universally with our lib, so keep the option to use hidden.
         """
