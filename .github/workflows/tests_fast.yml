@@ -4,6 +4,7 @@ permissions:
   pull-requests: read
 
 on:
+  workflow_dispatch:
   pull_request:
     branches: [ main ]
     types: [review_requested, ready_for_review]
@@ -13,8 +14,8 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     strategy:
-      
-      # If true, Github will cancel all other jobs in the matrix if any of them fails 
+
+      # If true, Github will cancel all other jobs in the matrix if any of them fails
       fail-fast: false
 
       matrix:
@@ -34,7 +35,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set reusable strings
-        # Define useful strings like the path to build dir 
+        # Define useful strings like the path to build dir
         id: strings
         shell: bash
         run: |
@@ -51,8 +52,8 @@ jobs:
                sudo apt-get update
                sudo apt-get install libgsl-dev libhdf5-dev
              elif [ "$RUNNER_OS" == "macOS" ]; then
-               brew remove azure-cli 
-               brew update 
+               brew remove azure-cli
+               brew update
                brew install qt@5 xz ccache zstd webp
                brew install gsl hdf5 muparser
              else
@@ -66,7 +67,7 @@ jobs:
         with:
           repository: beltoforion/muparser
           path: muparser
-      
+
       - name: Install muparser
       # Will install muparser without OpenMP support, our program doesn't need it here. ldconfig seems to be required for linux builds
         run: |
@@ -87,7 +88,7 @@ jobs:
         run: |
           cmake --build ${{ steps.strings.outputs.build_dir }} --config ${{ matrix.build_type }}
           cmake --install ${{ steps.strings.outputs.build_dir }}
-          
+
       - name: Run Collision QCD examples
         run: cd ${{ github.workspace }}/examples && ./bin/QCD && cd ${{ github.workspace }}
 
