@@ -74,7 +74,6 @@ macos.environment = {WALLGO_USE_CONAN_OMP="1", MACOSX_DEPLOYMENT_TARGET="11.0"}
 linux.archs = ["auto64"]
 macos.archs = ["auto"]
 windows.archs = ["auto64"]
-# Skip musllinux because the gsl recipe from conan failed to compile on them
-skip = "*musllinux_*"
-# Skip PyPy wheels on all platforms. Too much hassle with C-extensions and no demand
-skip = "pp*"
+# Skip musllinux because the gsl recipe from conan failed to compile on them.
+# Skip PyPy wheels on all platforms. Too much hassle with C-extensions and no demand.
+skip = ["*musllinux_*", "pp*"]
