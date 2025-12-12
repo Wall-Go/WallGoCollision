@@ -22,7 +22,7 @@ jobs:
           os: [
               ubuntu-latest,
               windows-latest,
-              #macos-13,
+              macos-15-intel,
               macos-14
             ]
 
@@ -32,7 +32,7 @@ jobs:
         with:
           # Fetch everything to ensure we get tags
           fetch-depth: 0
-      
+
       # Install Conan here already because we want to cache/restore its installed dependencies.
       # TODO: Caching requires more work on linux wheels since those happen inside Docker environment
       - name: Install Conan
@@ -58,13 +58,12 @@ jobs:
       - if: ${{ steps.cache-conan.outputs.cache-hit != 'true' }}
         name: Create default Conan profile if no cache was hit
         run: conan profile detect --exist-ok
-      
+
       - name: Build and test wheels (cibuildwheel)
-        uses: pypa/cibuildwheel@v2.21.3
+        uses: pypa/cibuildwheel
 
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
           name: cibw-wheels-${{ matrix.os }}
           path: wheelhouse/*.whl
-          
